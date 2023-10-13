@@ -40,25 +40,22 @@ public class ApiToken implements UniqueId {
         return functionIds;
     }
 
-    public void setFunctionIds(Set<Integer> functionIds){
+    public void setFunctionIds(Set<Integer> functionIds) {
         this.functionIds = functionIds;
     }
 
     public boolean validFunction(FunctionId functionId) {
         if (functionId != null) {
-            return functionIds.contains(functionId.getFunctionId());
+            return functionIds.contains(functionId.getId());
         } else {
             return true;
         }
     }
 
-
     @Override
     public String getUniqueId() {
         return uniqueId;
     }
-
-
 
 
 }

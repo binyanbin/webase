@@ -3,35 +3,50 @@ package com.bin.webase.domain.entity;
 import com.bin.webase.domain.command.model.command.IdName;
 import com.bin.webase.domain.container.DomainRegistry;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class FunctionId {
-    private IdName<Integer> idName;
-    private static Set<Integer> functionIdSet = new HashSet<>();
 
-    public FunctionId(Integer id, String name) {
-        this.idName = new IdName<>(id, name);
-    }
+    private static Map<Integer, FunctionId> mapFunctionId = new HashMap<>();
 
-    public static FunctionId newF(Integer id, String name) {
-        if (!functionIdSet.contains(id)) {
-            functionIdSet.add(id);
+    public static FunctionId def(Integer id, String name) {
+        FunctionId result = new FunctionId(id, name);
+        if (!mapFunctionId.containsKey(id)) {
+            mapFunctionId.put(id, result);
         } else {
             DomainRegistry.error("Function[" + id + "]已定义");
         }
-        return new FunctionId(id, name);
+        return result;
     }
 
-    public static Set<Integer> listFunctionId() {
-        return functionIdSet;
+    public static Set<Integer> listId() {
+        Set<Integer> result = new HashSet<>();
+        for (Map.Entry<Integer, FunctionId> entry : mapFunctionId.entrySet()) {
+            result.add(entry.getKey());
+        }
+        return result;
+    }
+
+    public static List<FunctionId> listFunctionId() {
+        List<FunctionId> result = new ArrayList<>();
+        for (Map.Entry<Integer, FunctionId> entry : mapFunctionId.entrySet()) {
+            result.add(entry.getValue());
+        }
+        return result;
+    }
+
+    public static FunctionId parse(Integer id) {
+        return mapFunctionId.get(id);
+    }
+
+
+    private IdName<Integer> idName;
+
+    FunctionId(Integer id, String name) {
+        this.idName = new IdName<>(id, name);
     }
 
     public Integer getId() {
-        return idName.getId();
-    }
-
-    public Integer getFunctionId() {
         return idName.getId();
     }
 

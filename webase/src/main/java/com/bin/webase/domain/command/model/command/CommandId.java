@@ -1,26 +1,49 @@
 package com.bin.webase.domain.command.model.command;
 
 import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.entity.FunctionId;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class CommandId {
+
+    private static Map<Integer,CommandId> mapCommand = new HashMap<>();
+
+    public static CommandId def(Integer id, String name) {
+        CommandId result = new CommandId(id, name);
+        if (!mapCommand.containsKey(id)){
+            mapCommand.put(id,result);
+        } else {
+            DomainRegistry.error("command[" + id + "]已定义");
+        }
+        return result;
+    }
+
+    public static List<Integer> listId() {
+        List<Integer> result = new ArrayList<>();
+        for (Map.Entry<Integer, CommandId> entry : mapCommand.entrySet()) {
+            result.add(entry.getKey());
+        }
+        return result;
+    }
+
     private IdName<Integer> idName;
-    private static Set<Integer> commandIdSet = new HashSet<>();
+
+    public static List<CommandId> listCommandId() {
+        List<CommandId> result = new ArrayList<>();
+        for (Map.Entry<Integer, CommandId> entry : mapCommand.entrySet()) {
+            result.add(entry.getValue());
+        }
+        return result;
+    }
+
 
     CommandId(Integer id, String name) {
         this.idName = new IdName(id, name);
     }
 
-    public static CommandId newC(Integer id, String name) {
-        if (!commandIdSet.contains(id)){
-            commandIdSet.add(id);
-        } else {
-            DomainRegistry.error("command[" + id + "]已定义");
-        }
-
-        return new CommandId(id, name);
+    public static CommandId parse(Integer id) {
+        return mapCommand.get(id);
     }
 
     public Integer getId() {
@@ -31,5 +54,5 @@ public class CommandId {
         return idName.getName();
     }
 
-    public static final CommandId NOOP = CommandId.newC(0, "无操作");
+    public static final CommandId NOOP = CommandId.def(0, "无操作");
 }
