@@ -1,4 +1,4 @@
-package com.bin.webase.domain.content;
+package com.bin.webase.domain.web;
 
 
 public interface IDisposeRequest {

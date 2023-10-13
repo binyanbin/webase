@@ -23,6 +23,17 @@ public class NormalStateMachine implements IStateMachine {
         return result;
     }
 
+    public static BizStateId getBizState(Integer stateId) {
+        if (ENABLE.getId().equals(stateId)) {
+            return ENABLE;
+        } else if (DISABLE.getId().equals(stateId)) {
+            return DISABLE;
+        } else if (DELETE.getId().equals(stateId)) {
+            return DELETE;
+        }
+        return null;
+    }
+
     public NormalStateMachine(CommandType add, CommandType update, CommandType delete, CommandType disable) {
         this.addCommand = add;
         this.updateCommand = update;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 业务状态机(业务状态管理)
+ * 业务状态机:验证操作，更新状态
  */
 public class BizStateMachine {
     private List<BizState> bizStates;

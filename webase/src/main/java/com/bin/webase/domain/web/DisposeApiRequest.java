@@ -1,4 +1,4 @@
-package com.bin.webase.domain.content;
+package com.bin.webase.domain.web;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -17,7 +17,7 @@ public class DisposeApiRequest {
         this.validSign = validSign;
     }
 
-    @Before("@annotation(com.bin.webase.domain.content.ApiMethodAttribute)")
+    @Before("@annotation(com.bin.webase.domain.web.ApiMethodAttribute)")
     public void construct(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         ApiMethodAttribute methodAttribute = methodSignature.getMethod().getAnnotation(ApiMethodAttribute.class);

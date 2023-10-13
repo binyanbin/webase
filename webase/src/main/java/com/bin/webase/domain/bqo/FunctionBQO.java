@@ -1,14 +1,14 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
-import com.bin.webase.domain.content.FunctionObject;
+import com.bin.webase.domain.entity.FunctionObject;
 
 
-public abstract class FunctionDTO<T> extends FunctionObject {
+public abstract class FunctionBQO<T> extends FunctionObject {
 
     private T data;
     private final Integer code;
 
-    public FunctionDTO() {
+    public FunctionBQO() {
         super();
         this.code = 0;
     }

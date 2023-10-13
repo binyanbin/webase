@@ -1,4 +1,4 @@
-package com.bin.webase.domain.content;
+package com.bin.webase.domain.web;
 
 import com.bin.webase.domain.container.function.Function;
 import com.bin.webase.domain.entity.UniqueId;

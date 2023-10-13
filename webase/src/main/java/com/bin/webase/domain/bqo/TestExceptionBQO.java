@@ -1,6 +1,6 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
-public class TestExceptionDTO extends ErrorDTO {
+public class TestExceptionBQO extends ErrorBQO {
     private String stack;
 
     public String getStack() {

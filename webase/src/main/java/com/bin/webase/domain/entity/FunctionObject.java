@@ -1,12 +1,17 @@
-package com.bin.webase.domain.content;
+package com.bin.webase.domain.entity;
 
 import com.bin.webase.domain.container.function.Function;
+import com.bin.webase.domain.web.ApiToken;
+import com.bin.webase.domain.web.ThreadWebContextHolder;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 权限
+ */
 public abstract class FunctionObject {
     private ApiToken token;
     private final List<Function> functions;

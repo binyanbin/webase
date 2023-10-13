@@ -1,4 +1,4 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
 
 
@@ -7,14 +7,14 @@ import java.io.Serializable;
 /**
  * 无结果返回
  */
-public class NoResultDTO implements Serializable {
+public class NoResultBQO implements Serializable {
     private Integer code;
 
-    NoResultDTO(){
+    NoResultBQO(){
 
     }
 
-    NoResultDTO(Integer code) {
+    NoResultBQO(Integer code) {
         this.code = code;
     }
 

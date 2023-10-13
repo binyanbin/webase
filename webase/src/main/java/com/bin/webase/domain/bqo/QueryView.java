@@ -1,4 +1,4 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
 
 import java.util.List;

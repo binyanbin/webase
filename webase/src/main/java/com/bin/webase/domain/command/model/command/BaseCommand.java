@@ -2,8 +2,8 @@ package com.bin.webase.domain.command.model.command;
 
 import com.bin.webase.domain.command.BaseReceiver;
 import com.bin.webase.domain.command.Result;
-import com.bin.webase.domain.content.ApiToken;
-import com.bin.webase.domain.content.FunctionObject;
+import com.bin.webase.domain.web.ApiToken;
+import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.domain.entity.DbDomain;
 import com.bin.webase.domain.entity.IBranch;
 import com.bin.webase.domain.entity.statemachine.BizStateMachine;

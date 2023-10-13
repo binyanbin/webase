@@ -1,4 +1,4 @@
-package com.bin.webase.domain.content;
+package com.bin.webase.domain.web;
 
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;

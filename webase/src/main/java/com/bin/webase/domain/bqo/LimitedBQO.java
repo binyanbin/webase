@@ -1,8 +1,8 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
 import com.alibaba.fastjson.JSON;
 import com.bin.webase.domain.container.DomainRegistry;
-import com.bin.webase.domain.content.FunctionObject;
+import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class LimitedDTO<T> extends FunctionObject {
+public abstract class LimitedBQO<T> extends FunctionObject {
 
     private T data;
     private Integer code;
@@ -29,7 +29,7 @@ public abstract class LimitedDTO<T> extends FunctionObject {
         return this.getClass().getTypeName() + "_" + key + DATA_KEY;
     }
 
-    public LimitedDTO(String key) {
+    public LimitedBQO(String key) {
         super();
         this.key = key;
         if (DomainRegistry.getCacheBean().hasKey(getLimitKey())) {

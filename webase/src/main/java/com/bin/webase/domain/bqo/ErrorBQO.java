@@ -1,13 +1,13 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
-public class ErrorDTO extends NoResultDTO{
+public class ErrorBQO extends NoResultBQO {
 
     private String msg;
 
-    public ErrorDTO() {
+    public ErrorBQO() {
     }
 
-    public ErrorDTO(Integer code, String msg) {
+    public ErrorBQO(Integer code, String msg) {
         super(code);
         this.msg = msg;
     }

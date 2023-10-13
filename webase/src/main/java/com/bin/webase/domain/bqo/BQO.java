@@ -1,21 +1,20 @@
-package com.bin.webase.domain.dto;
+package com.bin.webase.domain.bqo;
 
 
 
 /**
- * 接口返回对象
+ * 业务查询对象
  *
- * @param <T> 业务对象结构
  */
-public class DTO<T> extends NoResultDTO {
+public class BQO<T> extends NoResultBQO {
 
     private T data;
 
-    public DTO() {
+    public BQO() {
         super(0);
     }
 
-    public DTO(T result){
+    public BQO(T result){
         super(0);
         setData(result);
     }
