@@ -1,6 +1,5 @@
 package com.bin.webase.domain.entity;
 
-import com.bin.webase.domain.container.function.Function;
 import com.bin.webase.domain.web.ApiToken;
 import com.bin.webase.domain.web.ThreadWebContextHolder;
 import com.bin.webase.domain.web.WebContext;
@@ -16,28 +15,31 @@ import java.util.List;
  */
 public abstract class FunctionObject {
     private ApiToken token;
-    private final List<Function> functions;
+    private final List<FunctionId> functionIds;
 
     public FunctionObject() {
-        functions = new ArrayList<>();
+        functionIds = new ArrayList<>();
         initFunction();
-        if (functions.size() > 0) {
+        if (functionIds.size() > 0) {
             WebContext webContext = ThreadWebContextHolder.getContext();
             if (webContext != null) {
                 token = webContext.getToken();
                 if (token != null) {
                     boolean haveFunction = false;
                     ErrorCheck.checkNotNull(token, ErrorCode.LoginError);
-                    for (Function function : functions) {
-                        haveFunction = token.validFunction(function);
+                    for (FunctionId functionId : functionIds) {
+                        haveFunction = token.validFunction(functionId);
                         if (haveFunction) {
                             break;
                         }
                     }
                     ErrorCheck.check(haveFunction, ErrorCode.NoFunctionID);
+                } else {
+                    throw new ApplicationException(ErrorCode.NoFunctionID);
                 }
+            } else {
+                throw new ApplicationException(ErrorCode.NoFunctionID);
             }
-            throw new ApplicationException(ErrorCode.NoFunctionID);
         }
     }
 
@@ -53,8 +55,8 @@ public abstract class FunctionObject {
         this.token = token;
     }
 
-    protected void addFunction(Function function) {
-        functions.add(function);
+    protected void addFunction(FunctionId functionId) {
+        functionIds.add(functionId);
     }
 
     public void initFunction() {

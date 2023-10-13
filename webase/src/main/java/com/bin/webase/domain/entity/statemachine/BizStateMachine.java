@@ -59,7 +59,7 @@ public class BizStateMachine {
             List<BizAction> bizActions = bizStateMachine.getFirstAction();
             boolean canExecute = false;
             for (BizAction action : bizActions) {
-                if (action.getCommand().equals(command.getCommandType())) {
+                if (action.getCommand().equals(command.getCommandId())) {
                     domain.setStateId(action.getState().getId());
                     canExecute = true;
                     break;

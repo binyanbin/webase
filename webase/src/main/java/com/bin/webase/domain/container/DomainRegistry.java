@@ -1,8 +1,6 @@
 package com.bin.webase.domain.container;
 
 
-import com.bin.webase.domain.container.function.FunctionContainer;
-import com.bin.webase.domain.container.function.IListFunction;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -18,9 +16,16 @@ public class DomainRegistry {
     private static ISequence sequence;
     private static ICache cache;
     private static IBranchLog branchLog;
-    private static CommandTypeContainer commandTypeContainer;
-    private static FunctionContainer functionContainer;
     private static ISpringContext springContext;
+    private static StringBuilder errorMsg;
+
+    public static void error(String msg) {
+        if (errorMsg == null) {
+            errorMsg = new StringBuilder().append(msg);
+        } else {
+            errorMsg.append(msg);
+        }
+    }
 
     public static void put(Object bean) {
         beanContainer.put(bean.getClass().getName(), bean);
@@ -64,22 +69,6 @@ public class DomainRegistry {
         branchLog = myBranchLog;
     }
 
-    public static CommandTypeContainer getCommandTypeContainer() {
-        return commandTypeContainer;
-    }
-
-    public static void setCommandTypeContainer(CommandTypeContainer commandTypeContainer) {
-        DomainRegistry.commandTypeContainer = commandTypeContainer;
-    }
-
-    public static FunctionContainer getFunctionContainer() {
-        return functionContainer;
-    }
-
-    public static void setFunctionContainer(FunctionContainer functionContainer) {
-        DomainRegistry.functionContainer = functionContainer;
-    }
-
     public static Object getContainBean(Class<?> c) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor ctr = c.getConstructors()[0];
         Class[] parameterTypes = ctr.getParameterTypes();
@@ -97,6 +86,9 @@ public class DomainRegistry {
     }
 
     public static void init(ISpringContext sc, String... packageNames) throws Exception {
+        if (errorMsg != null) {
+            throw new Exception(errorMsg.toString());
+        }
         springContext = sc;
         Map<String, IRepository> mapRepository = new HashMap<>();
         for (String packageName : packageNames) {
@@ -107,19 +99,10 @@ public class DomainRegistry {
                     Object bean = DomainRegistry.getContainBean(c);
                     DomainRegistry.put(bean);
                     IRepository repository = (IRepository) bean;
-                    ErrorCheck.checkArgumentException(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
+                    ErrorCheck.checkException(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
                     mapRepository.put(repository.getTableName(), repository);
                 }
             }
-        }
-        IListCommand listCommand = sc.getBean(IListCommand.class);
-        if (listCommand != null) {
-            DomainRegistry.setCommandTypeContainer(new CommandTypeContainer((listCommand)));
-        }
-
-        IListFunction listFunction = sc.getBean(IListFunction.class);
-        if (listFunction != null) {
-            DomainRegistry.setFunctionContainer(new FunctionContainer(listFunction));
         }
 
         ISequence sequence = sc.getBean(ISequence.class);
@@ -139,8 +122,6 @@ public class DomainRegistry {
 
         ErrorCheck.checkNotNullException(DomainRegistry.getSequenceBean(), "需要实现序例");
         ErrorCheck.checkNotNullException(DomainRegistry.getCacheBean(), "需要实现缓存");
-        ErrorCheck.checkNotNullException(DomainRegistry.getCommandTypeContainer(), "需要实现命令类型集合");
-        ErrorCheck.checkNotNullException(DomainRegistry.getFunctionContainer(), "需要实现权限集合");
         for (Map.Entry<String, IRepository> entry : mapRepository.entrySet()) {
             DomainRegistry.getSequenceBean().init(entry.getValue());
         }

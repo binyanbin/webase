@@ -1,6 +1,6 @@
 package com.bin.webase.domain.web;
 
-import com.bin.webase.domain.container.function.Function;
+import com.bin.webase.domain.entity.FunctionId;
 import com.bin.webase.domain.entity.UniqueId;
 
 import java.util.Set;
@@ -44,9 +44,9 @@ public class ApiToken implements UniqueId {
         this.functionIds = functionIds;
     }
 
-    public boolean validFunction(Function function) {
-        if (function != null) {
-            return functionIds.contains(function.getFunctionId());
+    public boolean validFunction(FunctionId functionId) {
+        if (functionId != null) {
+            return functionIds.contains(functionId.getFunctionId());
         } else {
             return true;
         }

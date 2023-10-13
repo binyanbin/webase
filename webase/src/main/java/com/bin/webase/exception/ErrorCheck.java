@@ -62,7 +62,7 @@ public class ErrorCheck {
         }
     }
 
-    public static void checkArgumentException(boolean result, String msg) throws Exception {
+    public static void checkException(boolean result, String msg) throws Exception {
         if (!result) {
             throw new Exception(msg);
         }

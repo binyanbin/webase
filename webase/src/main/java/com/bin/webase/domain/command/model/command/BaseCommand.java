@@ -2,12 +2,14 @@ package com.bin.webase.domain.command.model.command;
 
 import com.bin.webase.domain.command.BaseReceiver;
 import com.bin.webase.domain.command.Result;
-import com.bin.webase.domain.web.ApiToken;
-import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.domain.entity.DbDomain;
+import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.domain.entity.IBranch;
 import com.bin.webase.domain.entity.statemachine.BizStateMachine;
 import com.bin.webase.domain.entity.statemachine.IState;
+import com.bin.webase.domain.web.ApiToken;
+import com.bin.webase.exception.ErrorCheck;
+import com.bin.webase.exception.ErrorCode;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +24,7 @@ public abstract class BaseCommand extends FunctionObject {
 
     public BaseCommand() {
         super();
+        ErrorCheck.checkNotNull(getCommandId(), ErrorCode.NoFunctionID);
         this.now = new Date();
         this.dbDomain = new ArrayList<>();
     }
@@ -84,7 +87,7 @@ public abstract class BaseCommand extends FunctionObject {
 
     public abstract BaseReceiver getReceiver();
 
-    public abstract CommandType getCommandType();
+    public abstract CommandId getCommandId();
 
     public abstract String getInfo();
 
