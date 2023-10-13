@@ -3,6 +3,8 @@ package com.bin.webase.domain.entity;
 import com.bin.webase.domain.container.function.Function;
 import com.bin.webase.domain.web.ApiToken;
 import com.bin.webase.domain.web.ThreadWebContextHolder;
+import com.bin.webase.domain.web.WebContext;
+import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
 
@@ -17,19 +19,25 @@ public abstract class FunctionObject {
     private final List<Function> functions;
 
     public FunctionObject() {
-        token = ThreadWebContextHolder.getContext().getToken();
         functions = new ArrayList<>();
         initFunction();
-        boolean haveFunction = false;
-        if (functions != null && functions.size() > 0) {
-            ErrorCheck.checkNotNull(token, ErrorCode.LoginError);
-            for (Function function : functions) {
-                haveFunction = token.validFunction(function);
-                if (haveFunction) {
-                    break;
+        if (functions.size() > 0) {
+            WebContext webContext = ThreadWebContextHolder.getContext();
+            if (webContext != null) {
+                token = webContext.getToken();
+                if (token != null) {
+                    boolean haveFunction = false;
+                    ErrorCheck.checkNotNull(token, ErrorCode.LoginError);
+                    for (Function function : functions) {
+                        haveFunction = token.validFunction(function);
+                        if (haveFunction) {
+                            break;
+                        }
+                    }
+                    ErrorCheck.check(haveFunction, ErrorCode.NoFunctionID);
                 }
             }
-            ErrorCheck.check(haveFunction, ErrorCode.NoFunctionID);
+            throw new ApplicationException(ErrorCode.NoFunctionID);
         }
     }
 

@@ -55,4 +55,16 @@ public class ErrorCheck {
             DomainRegistry.getCacheBean().set(key, "", 2);
         }
     }
+
+    public static void checkNotNullException(Object obj, String msg) throws Exception {
+        if (obj == null) {
+            throw new Exception(msg);
+        }
+    }
+
+    public static void checkArgumentException(boolean result, String msg) throws Exception {
+        if (!result) {
+            throw new Exception(msg);
+        }
+    }
 }

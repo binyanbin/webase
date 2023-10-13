@@ -19,5 +19,5 @@ public class CommandType {
         return idName.getName();
     }
 
-    public static final CommandType NOOP = CommandType.newC(0, "无法操作");
+    public static final CommandType NOOP = CommandType.newC(0, "无操作");
 }

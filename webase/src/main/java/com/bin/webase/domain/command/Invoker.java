@@ -8,9 +8,6 @@ import com.bin.webase.domain.unitwork.UnitWork;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
 
-/**
- * 命令调用者
- */
 class Invoker {
 
     private final UnitWork unitWork;
@@ -25,9 +22,7 @@ class Invoker {
         return Holder.INSTANCE;
     }
 
-    /**
-     * 发布执行事件
-     */
+
     CommitResult execute(BaseCommand command) {
         beforeCommit(command);
         if (command.getResult().getState() != ResultState.fail) {

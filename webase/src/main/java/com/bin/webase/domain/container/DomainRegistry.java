@@ -107,7 +107,7 @@ public class DomainRegistry {
                     Object bean = DomainRegistry.getContainBean(c);
                     DomainRegistry.put(bean);
                     IRepository repository = (IRepository) bean;
-                    ErrorCheck.checkArgument(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
+                    ErrorCheck.checkArgumentException(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
                     mapRepository.put(repository.getTableName(), repository);
                 }
             }
@@ -137,10 +137,10 @@ public class DomainRegistry {
             DomainRegistry.setBranchLog(branchLog);
         }
 
-        ErrorCheck.checkNotNull(DomainRegistry.getSequenceBean(), "需要实现序例");
-        ErrorCheck.checkNotNull(DomainRegistry.getCacheBean(), "需要实现缓存");
-        ErrorCheck.checkNotNull(DomainRegistry.getCommandTypeContainer(), "需要实现命令类型集合");
-        ErrorCheck.checkNotNull(DomainRegistry.getFunctionContainer(), "需要实现权限集合");
+        ErrorCheck.checkNotNullException(DomainRegistry.getSequenceBean(), "需要实现序例");
+        ErrorCheck.checkNotNullException(DomainRegistry.getCacheBean(), "需要实现缓存");
+        ErrorCheck.checkNotNullException(DomainRegistry.getCommandTypeContainer(), "需要实现命令类型集合");
+        ErrorCheck.checkNotNullException(DomainRegistry.getFunctionContainer(), "需要实现权限集合");
         for (Map.Entry<String, IRepository> entry : mapRepository.entrySet()) {
             DomainRegistry.getSequenceBean().init(entry.getValue());
         }

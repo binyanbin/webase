@@ -1,8 +1,6 @@
 package com.bin.webase.domain.container;
 
 import com.bin.webase.domain.command.model.command.CommandType;
-import com.bin.webase.exception.ApplicationException;
-import com.bin.webase.exception.ErrorCode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,15 +11,15 @@ public class CommandTypeContainer {
     private final Map<Integer, CommandType> commandMap;
     private final List<CommandType> commands;
 
-    public CommandTypeContainer(IListCommand iCommand) {
+    public CommandTypeContainer(IListCommand iCommand) throws Exception {
         commandMap = new HashMap<>();
         commands = iCommand.list();
-        if (commands==null ||commands.size()==0) {
-            throw new ApplicationException(ErrorCode.ArgumentsIncorrect, "没有找到命令集合");
+        if (commands == null || commands.size() == 0) {
+            throw new Exception("没有找到命令集合");
         }
         for (CommandType commandType : commands) {
             if (commandMap.containsKey(commandType.getId())) {
-                throw new ApplicationException(ErrorCode.ArgumentsIncorrect, "初始化失败,有相同的命令");
+                throw new Exception("初始化失败,有相同的命令");
             }
             commandMap.put(commandType.getId(), commandType);
         }
