@@ -2,11 +2,13 @@ package com.bin.webase.domain.command.model.command;
 
 import com.bin.webase.domain.command.BaseReceiver;
 import com.bin.webase.domain.command.Result;
+import com.bin.webase.domain.container.DomainRegistry;
 import com.bin.webase.domain.entity.DbDomain;
 import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.domain.entity.IBranch;
 import com.bin.webase.domain.entity.statemachine.BizStateMachine;
 import com.bin.webase.domain.entity.statemachine.IState;
+import com.bin.webase.domain.unitwork.CommitResult;
 import com.bin.webase.domain.web.ApiToken;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
@@ -27,6 +29,10 @@ public abstract class BaseCommand extends FunctionObject {
         ErrorCheck.checkNotNull(getCommandId(), ErrorCode.NoFunctionID);
         this.now = new Date();
         this.dbDomain = new ArrayList<>();
+    }
+
+    public CommitResult execute() {
+        return DomainRegistry.getInvoker().execute(this);
     }
 
     public Date getNow() {

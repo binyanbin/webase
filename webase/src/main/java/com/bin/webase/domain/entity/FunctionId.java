@@ -27,7 +27,7 @@ public class FunctionId {
         return result;
     }
 
-    public static List<FunctionId> listFunctionId() {
+    public static List<FunctionId> listFunction() {
         List<FunctionId> result = new ArrayList<>();
         for (Map.Entry<Integer, FunctionId> entry : mapFunctionId.entrySet()) {
             result.add(entry.getValue());

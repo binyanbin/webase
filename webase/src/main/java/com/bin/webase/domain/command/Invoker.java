@@ -8,22 +8,22 @@ import com.bin.webase.domain.unitwork.UnitWork;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
 
-class Invoker {
+public class Invoker {
 
     private final UnitWork unitWork;
     private final AfterCommandHandler afterCommit;
 
-    public Invoker() {
+    Invoker() {
         this.unitWork = new UnitWork(DomainRegistry.getSequenceBean());
         this.afterCommit = new AfterCommandHandler();
     }
 
-    public static Invoker instance() {
+    static Invoker instance() {
         return Holder.INSTANCE;
     }
 
 
-    CommitResult execute(BaseCommand command) {
+    public CommitResult execute(BaseCommand command) {
         beforeCommit(command);
         if (command.getResult().getState() != ResultState.fail) {
             unitWork.commit();
@@ -42,11 +42,11 @@ class Invoker {
         }
     }
 
-    public UnitWork getUnitWork() {
+    UnitWork getUnitWork() {
         return unitWork;
     }
 
-    public AfterCommandHandler getAfterCommandHandler() {
+    AfterCommandHandler getAfterCommandHandler() {
         return afterCommit;
     }
 

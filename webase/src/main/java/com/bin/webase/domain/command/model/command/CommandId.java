@@ -1,18 +1,20 @@
 package com.bin.webase.domain.command.model.command;
 
 import com.bin.webase.domain.container.DomainRegistry;
-import com.bin.webase.domain.entity.FunctionId;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CommandId {
 
-    private static Map<Integer,CommandId> mapCommand = new HashMap<>();
+    private static Map<Integer, CommandId> mapCommand = new HashMap<>();
 
     public static CommandId def(Integer id, String name) {
         CommandId result = new CommandId(id, name);
-        if (!mapCommand.containsKey(id)){
-            mapCommand.put(id,result);
+        if (!mapCommand.containsKey(id)) {
+            mapCommand.put(id, result);
         } else {
             DomainRegistry.error("command[" + id + "]已定义");
         }
@@ -29,7 +31,7 @@ public class CommandId {
 
     private IdName<Integer> idName;
 
-    public static List<CommandId> listCommandId() {
+    public static List<CommandId> listCommand() {
         List<CommandId> result = new ArrayList<>();
         for (Map.Entry<Integer, CommandId> entry : mapCommand.entrySet()) {
             result.add(entry.getValue());

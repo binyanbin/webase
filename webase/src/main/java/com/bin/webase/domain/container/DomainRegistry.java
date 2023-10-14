@@ -1,6 +1,7 @@
 package com.bin.webase.domain.container;
 
 
+import com.bin.webase.domain.command.BaseInvoker;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -17,7 +18,9 @@ public class DomainRegistry {
     private static ICache cache;
     private static IBranchLog branchLog;
     private static ISpringContext springContext;
+    private static BaseInvoker invoker;
     private static StringBuilder errorMsg;
+
 
     public static void error(String msg) {
         if (errorMsg == null) {
@@ -38,27 +41,16 @@ public class DomainRegistry {
         return springContext.getBean(clazz);
     }
 
+    public static BaseInvoker getInvoker() {
+        return invoker;
+    }
+
     public static ISequence getSequenceBean() {
         return sequence;
     }
 
-    public static void setSequenceBean(ISequence mySequence) {
-        sequence = mySequence;
-    }
-
     public static ICache getCacheBean() {
         return cache;
-    }
-
-    public static void setCacheBean(ICache myCache) {
-        cache = myCache;
-    }
-
-    public static IBranchLog getBranchLog(Class<? extends IBranchLog> clazz) {
-        if (beanContainer.containsKey(clazz.getName())) {
-            return (IBranchLog) beanContainer.get((clazz.getName()));
-        }
-        return branchLog;
     }
 
     public static IBranchLog getBranchLog() {
@@ -107,21 +99,27 @@ public class DomainRegistry {
 
         ISequence sequence = sc.getBean(ISequence.class);
         if (sequence != null) {
-            DomainRegistry.setSequenceBean(sequence);
+            DomainRegistry.sequence = sequence;
         }
 
         ICache cache = sc.getBean(ICache.class);
         if (cache != null) {
-            DomainRegistry.setCacheBean(cache);
+            DomainRegistry.cache =cache;
         }
 
         IBranchLog branchLog = sc.getBean(IBranchLog.class);
         if (branchLog != null) {
-            DomainRegistry.setBranchLog(branchLog);
+            DomainRegistry.branchLog = branchLog;
         }
 
-        ErrorCheck.checkNotNullException(DomainRegistry.getSequenceBean(), "需要实现序例");
-        ErrorCheck.checkNotNullException(DomainRegistry.getCacheBean(), "需要实现缓存");
+        BaseInvoker invoker = sc.getBean(BaseInvoker.class);
+        if (invoker != null) {
+            DomainRegistry.invoker = invoker;
+        }
+
+        ErrorCheck.checkNotNullException(DomainRegistry.sequence, "需要实现序例");
+        ErrorCheck.checkNotNullException(DomainRegistry.cache, "需要实现缓存");
+        ErrorCheck.checkNotNullException(DomainRegistry.invoker, "需要实现commandBus");
         for (Map.Entry<String, IRepository> entry : mapRepository.entrySet()) {
             DomainRegistry.getSequenceBean().init(entry.getValue());
         }

@@ -66,16 +66,16 @@ public class BizStateMachine {
                 }
             }
             if (!canExecute) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail);
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
             }
         } else {
             BizState state = bizStateMachine.getState(domain.getStateId());
             if (state == null) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail);
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
             }
             BizAction bizAction = state.getAction(command);
             if (bizAction == null) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail);
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
             } else {
                 if (bizAction.getState() != null) {
                     domain.setStateId(bizAction.getState().getId());

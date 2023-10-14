@@ -1,15 +1,14 @@
 package com.bin.webase.domain.command;
 
-
 import com.bin.webase.domain.command.model.command.BaseCommand;
 import com.bin.webase.domain.unitwork.CommitResult;
 
-/**
- * 对外调用
- */
-public class CommandBus {
+public abstract class BaseInvoker {
 
-    public static CommitResult execute(BaseCommand command) throws Exception {
+    protected CommitResult run(BaseCommand command) {
         return Invoker.instance().execute(command);
     }
+
+    public abstract CommitResult execute(BaseCommand command);
+
 }
