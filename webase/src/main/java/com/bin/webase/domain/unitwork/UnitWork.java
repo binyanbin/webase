@@ -35,40 +35,46 @@ public class UnitWork {
 
     public void remove(DbDomain domain) {
         ErrorCheck.checkNotNull(domain.getId(), "id不存在");
+        Context context = getContext();
         DbAction dbAction = getDbAction(domain);
         if (dbAction != null) {
             dbAction.getDbObject().setDbDomain(domain).setDbType(DbType.delete);
         } else {
-            saveObject(domain, DbType.delete);
+            context.saveObject(domain, DbType.delete);
         }
     }
 
     public void save(DbDomain domain) {
+        Context context = getContext();
         if (domain.getId() == null) {
             domain.setId(sequence.newKey(domain));
-            saveObject(domain, DbType.add);
+            context.saveObject(domain, DbType.add);
         } else {
             DbAction dbAction = getDbAction(domain);
             if (dbAction != null) {
                 dbAction.getDbObject().setDbDomain(domain).setDbType(DbType.update);
             } else {
-                saveObject(domain, DbType.update);
+                context.saveObject(domain, DbType.update);
             }
         }
     }
 
     public void save(CacheDomain domain) {
         ErrorCheck.checkNotNull(domain.getUniqueId(), "id不存在");
-        saveDomain(domain, DomainType.save);
+        getContext().saveDomain(domain, DomainType.save);
     }
 
     public void remove(CacheDomain domain) {
         ErrorCheck.checkNotNull(domain.getUniqueId(), "id不存在");
-        saveDomain(domain, DomainType.remove);
+        getContext().saveDomain(domain, DomainType.save);
     }
 
     public void any(Runner runner) {
-        saveRunner(runner);
+        getContext().saveRunner(runner);
+    }
+
+    public void saveAfterRun(Runner runner){
+        getContext().addAfter(runner);
     }
 
     public void commit() {
@@ -108,35 +114,13 @@ public class UnitWork {
         for (Runner runner : runners) {
             runner.run();
         }
+        List<Runner> runnerList = getContext().getAfterRun();
+        for (Runner runner :runnerList){
+            runner.run();
+        }
         context.remove();
     }
 
-    private void saveObject(DbDomain o, DbType dbType) {
-        List<DbAction> list = getContext().getActions();
-        DbAction dbAction = new DbAction(new DbObject(o, dbType), null, null);
-        list.add(dbAction);
-
-        Map<String, DbAction> mapId = getContext().getIdMap();
-        mapId.put(o.getUniqueId(), dbAction);
-    }
-
-    private void saveRunner(Runner runner) {
-        List<DbAction> list = getContext().getActions();
-        list.add(new DbAction(null, runner, null));
-    }
-
-    private void saveDomain(CacheDomain domain, DomainType type) {
-        DbAction dbAction = getDbAction(domain);
-        if (dbAction != null) {
-            dbAction.getDomain().setDomain(domain).setType(type);
-        } else {
-            List<DbAction> list = getContext().getActions();
-            dbAction = new DbAction(null, null, new DomainObject(type, domain));
-            list.add(dbAction);
-            Map<String, DbAction> mapId = getContext().getIdMap();
-            mapId.put(domain.getUniqueId(), dbAction);
-        }
-    }
 
     public <T extends DbDomain> T getDbDomain(String uniqueId) {
         Map<String, DbAction> mapId = getContext().getIdMap();
@@ -169,4 +153,6 @@ public class UnitWork {
         Map<String, DbAction> mapId = getContext().getIdMap();
         return mapId.get(domain.getUniqueId());
     }
+
+
 }

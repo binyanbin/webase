@@ -1,11 +1,13 @@
 package com.bin.webase.domain.operate;
 
 
+import com.bin.webase.domain.container.Container;
 import com.bin.webase.domain.entity.CacheDomain;
 import com.bin.webase.domain.entity.DbDomain;
 import com.bin.webase.domain.unitwork.DbObject;
 import com.bin.webase.domain.unitwork.DbType;
 import com.bin.webase.domain.unitwork.Runner;
+import com.bin.webase.domain.unitwork.UnitWork;
 
 import java.util.List;
 import java.util.function.Function;
@@ -15,18 +17,20 @@ import java.util.function.Function;
  */
 public class UnitWorkUtils {
 
+    private static final UnitWork UNIT_WORK = new UnitWork(Container.getSequenceBean());
+
     public static <T extends DbDomain> T getDbObject(String uniqueId) {
-        return OperateHolder.instance().getUnitWork().getDbDomain(uniqueId);
+        return UNIT_WORK.getDbDomain(uniqueId);
     }
 
     public static <T extends CacheDomain> T getDomain(String uniqueId) {
-        return OperateHolder.instance().getUnitWork().getBaseDomain(uniqueId);
+        return UNIT_WORK.getBaseDomain(uniqueId);
     }
 
     public static <T> List<T> updateListByCache(List<T> list, Function<T, Long> function) {
         for (int i = 0; i < list.size(); i++) {
             T t = list.get(i);
-            DbObject dbObject = OperateHolder.instance().getUnitWork().getDbObject(DbDomain.getUniqueId(t.getClass(), function.apply(t)));
+            DbObject dbObject = UNIT_WORK.getDbObject(DbDomain.getUniqueId(t.getClass(), function.apply(t)));
             if (dbObject != null) {
                 if (dbObject.getDbType().equals(DbType.update)) {
                     DbDomain domain = dbObject.getDbDomain();
@@ -45,33 +49,37 @@ public class UnitWorkUtils {
         if (domain == null || domain.isNull()) {
             throw new NullPointerException();
         }
-        OperateHolder.instance().getUnitWork().save(domain);
+        UNIT_WORK.save(domain);
     }
 
     static void save(CacheDomain domain) {
         if (domain == null || domain.isNull()) {
             throw new NullPointerException();
         }
-        OperateHolder.instance().getUnitWork().save(domain);
+        UNIT_WORK.save(domain);
     }
 
     static void remove(CacheDomain domain) {
         if (domain != null && !domain.isNull()) {
-            OperateHolder.instance().getUnitWork().remove(domain);
+            UNIT_WORK.remove(domain);
         }
     }
 
     static void remove(DbDomain domain) {
         if (domain != null && !domain.isNull()) {
-            OperateHolder.instance().getUnitWork().remove(domain);
+            UNIT_WORK.remove(domain);
         }
     }
 
     static void any(Runner runner) {
-        OperateHolder.instance().getUnitWork().any(runner);
+        UNIT_WORK.any(runner);
     }
 
-    static void afterCommand(Runner runner) {
-        OperateHolder.instance().getAfterCommandHandler().add(runner);
+    static void after(Runner runner) {
+        UNIT_WORK.saveAfterRun(runner);
+    }
+
+    static void commit() {
+        UNIT_WORK.commit();
     }
 }

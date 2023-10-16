@@ -33,7 +33,7 @@ class BaseContainer {
     }
 
     public void afterCommit(Runner runner) {
-        UnitWorkUtils.afterCommand(runner);
+        UnitWorkUtils.after(runner);
     }
 
     protected void saveBranchLog(OperateId operateId, String msg, IParam param, DbDomain domain) {

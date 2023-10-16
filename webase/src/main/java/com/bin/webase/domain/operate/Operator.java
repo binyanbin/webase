@@ -41,8 +41,7 @@ public abstract class Operator<C extends IParam> extends BaseContainer {
         param.validate();
         Result result = dispose(param);
         if (result.getState() != ResultState.fail) {
-            OperateHolder.instance().getUnitWork().commit();
-            OperateHolder.instance().getAfterCommandHandler().execute();
+           UnitWorkUtils.commit();
         }
         return result;
     }
