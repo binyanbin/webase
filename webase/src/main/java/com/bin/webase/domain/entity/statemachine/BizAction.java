@@ -1,17 +1,17 @@
 package com.bin.webase.domain.entity.statemachine;
 
-import com.bin.webase.domain.command.model.command.CommandId;
+import com.bin.webase.domain.operate.model.OperateId;
 
 public class BizAction {
-    private CommandId command;
+    private OperateId command;
     private BizStateId stateId;
 
-    public BizAction(CommandId command, BizStateId state) {
+    public BizAction(OperateId command, BizStateId state) {
         this.command = command;
         this.stateId = state;
     }
 
-    public CommandId getCommand() {
+    public OperateId getCommand() {
         return command;
     }
 

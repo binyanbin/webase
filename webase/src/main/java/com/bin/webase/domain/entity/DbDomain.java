@@ -1,7 +1,7 @@
 package com.bin.webase.domain.entity;
 
 
-import com.bin.webase.domain.command.UnitWorkUtils;
+import com.bin.webase.domain.operate.UnitWorkUtils;
 import com.bin.webase.domain.container.IRepository;
 
 import java.lang.reflect.*;

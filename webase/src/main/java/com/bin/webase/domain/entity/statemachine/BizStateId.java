@@ -1,6 +1,6 @@
 package com.bin.webase.domain.entity.statemachine;
 
-import com.bin.webase.domain.command.model.command.IdName;
+import com.bin.webase.domain.operate.model.IdName;
 
 public class BizStateId {
     private IdName<Integer> idName;

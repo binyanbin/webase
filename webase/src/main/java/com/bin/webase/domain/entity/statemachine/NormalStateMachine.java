@@ -1,6 +1,6 @@
 package com.bin.webase.domain.entity.statemachine;
 
-import com.bin.webase.domain.command.model.command.CommandId;
+import com.bin.webase.domain.operate.model.OperateId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ public class NormalStateMachine implements IStateMachine {
     private static final BizStateId DELETE = BizStateId.newS(2, "删除");
 
     private BizStateMachine bizStateMachine;
-    private CommandId disableCommand;
-    private CommandId deleteCommand;
-    private CommandId updateCommand;
-    private CommandId addCommand;
+    private OperateId disableCommand;
+    private OperateId deleteCommand;
+    private OperateId updateCommand;
+    private OperateId addCommand;
 
     public static List<Integer> noDelete() {
         List<Integer> result = new ArrayList<>(2);
@@ -34,7 +34,7 @@ public class NormalStateMachine implements IStateMachine {
         return null;
     }
 
-    public NormalStateMachine(CommandId add, CommandId update, CommandId delete, CommandId disable) {
+    public NormalStateMachine(OperateId add, OperateId update, OperateId delete, OperateId disable) {
         this.addCommand = add;
         this.updateCommand = update;
         this.deleteCommand = delete;
@@ -48,33 +48,33 @@ public class NormalStateMachine implements IStateMachine {
                 .addState(new BizState(NormalStateMachine.DISABLE)
                         .addAction(deleteCommand, NormalStateMachine.DELETE))
                 .addState(new BizState(NormalStateMachine.DELETE)
-                        .addAction(CommandId.NOOP));
+                        .addAction(OperateId.NOOP));
     }
 
-    public NormalStateMachine(CommandId add, CommandId update, CommandId delete) {
+    public NormalStateMachine(OperateId add, OperateId update, OperateId delete) {
         this.addCommand = add;
         this.updateCommand = update;
         this.deleteCommand = delete;
-        this.disableCommand = CommandId.NOOP;
+        this.disableCommand = OperateId.NOOP;
         bizStateMachine = new BizStateMachine().
                 addFirstAction(new BizAction(addCommand, NormalStateMachine.ENABLE)).
                 addState(new BizState(NormalStateMachine.ENABLE)
                         .addAction(deleteCommand, NormalStateMachine.DELETE)
                         .addAction(updateCommand, NormalStateMachine.ENABLE))
                 .addState(new BizState(NormalStateMachine.DELETE)
-                        .addAction(CommandId.NOOP));
+                        .addAction(OperateId.NOOP));
     }
 
-    public NormalStateMachine(CommandId add, CommandId delete) {
+    public NormalStateMachine(OperateId add, OperateId delete) {
         this.addCommand = add;
         this.deleteCommand = delete;
-        this.disableCommand = this.updateCommand = CommandId.NOOP;
+        this.disableCommand = this.updateCommand = OperateId.NOOP;
         bizStateMachine = new BizStateMachine().
                 addFirstAction(new BizAction(addCommand, NormalStateMachine.ENABLE)).
                 addState(new BizState(NormalStateMachine.ENABLE)
                         .addAction(deleteCommand, NormalStateMachine.DELETE))
                 .addState(new BizState(NormalStateMachine.DELETE)
-                        .addAction(CommandId.NOOP));
+                        .addAction(OperateId.NOOP));
     }
 
 

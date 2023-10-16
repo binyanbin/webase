@@ -1,4 +1,4 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
 
 
@@ -6,15 +6,15 @@ package com.bin.webase.domain.bqo;
  * 业务查询对象
  *
  */
-public class BQO<T> extends NoResultBQO {
+public class Query<T> extends NoResult {
 
     private T data;
 
-    public BQO() {
+    public Query() {
         super(0);
     }
 
-    public BQO(T result){
+    public Query(T result){
         super(0);
         setData(result);
     }

@@ -1,4 +1,4 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
 
 
@@ -7,14 +7,14 @@ import java.io.Serializable;
 /**
  * 无结果返回
  */
-public class NoResultBQO implements Serializable {
+public class NoResult implements Serializable {
     private Integer code;
 
-    NoResultBQO(){
+    NoResult(){
 
     }
 
-    NoResultBQO(Integer code) {
+    NoResult(Integer code) {
         this.code = code;
     }
 

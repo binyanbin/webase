@@ -1,7 +1,6 @@
 package com.bin.webase.domain.entity.statemachine;
 
-import com.bin.webase.domain.command.model.command.BaseCommand;
-import com.bin.webase.domain.command.model.command.CommandId;
+import com.bin.webase.domain.operate.model.OperateId;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
 
@@ -25,31 +24,31 @@ public class BizState {
         return id;
     }
 
-    public BizState addAction(CommandId command, BizStateId resultState) {
-        if (command != CommandId.NOOP) {
+    public BizState addAction(OperateId command, BizStateId resultState) {
+        if (command != OperateId.NOOP) {
             validate(command);
             actions.add(new BizAction(command, resultState));
         }
         return this;
     }
 
-    public BizState addAction(CommandId commandId) {
-        validate(commandId);
-        actions.add(new BizAction(commandId, null));
+    public BizState addAction(OperateId operateId) {
+        validate(operateId);
+        actions.add(new BizAction(operateId, null));
         return this;
     }
 
-    private void validate(CommandId commandId) {
+    private void validate(OperateId operateId) {
         for (BizAction bizAction : this.actions) {
-            if (bizAction.getCommand().equals(commandId)) {
+            if (bizAction.getCommand().equals(operateId)) {
                 throw new ApplicationException(ErrorCode.StateMachineSameGroupId);
             }
         }
     }
 
-    BizAction getAction(BaseCommand baseCommand) {
+    BizAction getAction(OperateId operateId) {
         for (BizAction bizAction : this.actions) {
-            if (bizAction.getCommand().equals(baseCommand.getCommandId())) {
+            if (bizAction.getCommand().equals(operateId)) {
                 return bizAction;
             }
         }

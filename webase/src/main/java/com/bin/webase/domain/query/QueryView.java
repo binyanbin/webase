@@ -1,4 +1,4 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
 
 import java.util.List;

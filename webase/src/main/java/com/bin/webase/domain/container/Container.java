@@ -1,7 +1,6 @@
 package com.bin.webase.domain.container;
 
 
-import com.bin.webase.domain.command.BaseInvoker;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -11,14 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class DomainRegistry {
+public class Container {
 
     private final static Map<String, Object> beanContainer = new HashMap<>();
     private static ISequence sequence;
     private static ICache cache;
     private static IBranchLog branchLog;
-    private static ISpringContext springContext;
-    private static BaseInvoker invoker;
+    private static IContext springContext;
     private static StringBuilder errorMsg;
 
 
@@ -34,16 +32,17 @@ public class DomainRegistry {
         beanContainer.put(bean.getClass().getName(), bean);
     }
 
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T extends IRepository> T getRepository(Class<T> clazz) {
         if (beanContainer.containsKey(clazz.getName())) {
             return (T) beanContainer.get(clazz.getName());
         }
+        return null;
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
         return springContext.getBean(clazz);
     }
 
-    public static BaseInvoker getInvoker() {
-        return invoker;
-    }
 
     public static ISequence getSequenceBean() {
         return sequence;
@@ -77,7 +76,7 @@ public class DomainRegistry {
         return bean;
     }
 
-    public static void init(ISpringContext sc, String... packageNames) throws Exception {
+    public static void init(IContext sc, String... packageNames) throws Exception {
         if (errorMsg != null) {
             throw new Exception(errorMsg.toString());
         }
@@ -88,8 +87,8 @@ public class DomainRegistry {
             Set<Class<?>> set = f.getTypesAnnotatedWith(DoRepository.class);
             for (Class<?> c : set) {
                 if (c.getClass().equals(IRepository.class.getClass())) {
-                    Object bean = DomainRegistry.getContainBean(c);
-                    DomainRegistry.put(bean);
+                    Object bean = Container.getContainBean(c);
+                    Container.put(bean);
                     IRepository repository = (IRepository) bean;
                     ErrorCheck.checkException(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
                     mapRepository.put(repository.getTableName(), repository);
@@ -99,29 +98,24 @@ public class DomainRegistry {
 
         ISequence sequence = sc.getBean(ISequence.class);
         if (sequence != null) {
-            DomainRegistry.sequence = sequence;
+            Container.sequence = sequence;
         }
 
         ICache cache = sc.getBean(ICache.class);
         if (cache != null) {
-            DomainRegistry.cache =cache;
+            Container.cache = cache;
         }
 
         IBranchLog branchLog = sc.getBean(IBranchLog.class);
         if (branchLog != null) {
-            DomainRegistry.branchLog = branchLog;
+            Container.branchLog = branchLog;
         }
 
-        BaseInvoker invoker = sc.getBean(BaseInvoker.class);
-        if (invoker != null) {
-            DomainRegistry.invoker = invoker;
-        }
 
-        ErrorCheck.checkNotNullException(DomainRegistry.sequence, "需要实现序例");
-        ErrorCheck.checkNotNullException(DomainRegistry.cache, "需要实现缓存");
-        ErrorCheck.checkNotNullException(DomainRegistry.invoker, "需要实现commandBus");
+        ErrorCheck.checkNotNullException(Container.sequence, "需要实现序例");
+        ErrorCheck.checkNotNullException(Container.cache, "需要实现缓存");
         for (Map.Entry<String, IRepository> entry : mapRepository.entrySet()) {
-            DomainRegistry.getSequenceBean().init(entry.getValue());
+            Container.getSequenceBean().init(entry.getValue());
         }
     }
 }

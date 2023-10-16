@@ -1,7 +1,7 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
 import com.alibaba.fastjson.JSON;
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.container.Container;
 import com.bin.webase.domain.entity.FunctionObject;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class LimitedBQO<T> extends FunctionObject {
+public abstract class RestrictQuery<T> extends FunctionObject {
 
     private T data;
     private Integer code;
@@ -29,10 +29,10 @@ public abstract class LimitedBQO<T> extends FunctionObject {
         return this.getClass().getTypeName() + "_" + key + DATA_KEY;
     }
 
-    public LimitedBQO(String key) {
+    public RestrictQuery(String key) {
         super();
         this.key = key;
-        if (DomainRegistry.getCacheBean().hasKey(getLimitKey())) {
+        if (Container.getCacheBean().hasKey(getLimitKey())) {
             throw new ApplicationException(ErrorCode.ServerBusy);
         }
         this.code = 0;
@@ -45,7 +45,7 @@ public abstract class LimitedBQO<T> extends FunctionObject {
 
     public void setResult(T data) {
         this.data = data;
-        String val = DomainRegistry.getCacheBean().get(getDateKey());
+        String val = Container.getCacheBean().get(getDateKey());
         Date end = new Date();
         Long timeSpan = end.getTime() - begin.getTime();
         List<Long> saveTimeSpan  = new ArrayList<>(1);
@@ -65,9 +65,9 @@ public abstract class LimitedBQO<T> extends FunctionObject {
 
         if (average > getMaxTimeSpan()
                 && saveTimeSpan.size() > getMinCount()) {
-            DomainRegistry.getCacheBean().set(getLimitKey(), average.toString(), LIMIT_TIME_SPAN);
+            Container.getCacheBean().set(getLimitKey(), average.toString(), LIMIT_TIME_SPAN);
         }
-        DomainRegistry.getCacheBean().set(getLimitKey(), JSON.toJSONString(saveTimeSpan), LIMIT_TIME_SPAN);
+        Container.getCacheBean().set(getLimitKey(), JSON.toJSONString(saveTimeSpan), LIMIT_TIME_SPAN);
     }
 
 

@@ -1,6 +1,6 @@
 package com.bin.webase.domain.entity.statemachine;
 
-import com.bin.webase.domain.command.model.command.BaseCommand;
+import com.bin.webase.domain.operate.model.OperateId;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
 
@@ -50,7 +50,7 @@ public class BizStateMachine {
         return this.firstActions;
     }
 
-    public static void disposeState(IState domain, BaseCommand command) {
+    public static void disposeState(IState domain, OperateId command) {
         IStateMachine bizStateMachine = domain.getStateMachine();
         if (bizStateMachine == null) {
             throw new ApplicationException(ErrorCode.NoStateMachine);
@@ -59,23 +59,23 @@ public class BizStateMachine {
             List<BizAction> bizActions = bizStateMachine.getFirstAction();
             boolean canExecute = false;
             for (BizAction action : bizActions) {
-                if (action.getCommand().equals(command.getCommandId())) {
+                if (action.getCommand().equals(command)) {
                     domain.setStateId(action.getState().getId());
                     canExecute = true;
                     break;
                 }
             }
             if (!canExecute) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getName() + "]无法执行");
             }
         } else {
             BizState state = bizStateMachine.getState(domain.getStateId());
             if (state == null) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getName() + "]无法执行");
             }
             BizAction bizAction = state.getAction(command);
             if (bizAction == null) {
-                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getCommandId().getName() + "]无法执行");
+                throw new ApplicationException(ErrorCode.StateMachineExecuteFail, "[" + command.getName() + "]无法执行");
             } else {
                 if (bizAction.getState() != null) {
                     domain.setStateId(bizAction.getState().getId());

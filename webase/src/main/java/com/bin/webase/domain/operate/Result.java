@@ -1,4 +1,4 @@
-package com.bin.webase.domain.command;
+package com.bin.webase.domain.operate;
 
 public class Result {
     private final ResultState state;
@@ -24,6 +24,10 @@ public class Result {
         this.msg = "";
         this.state = ResultState.success;
         this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return this.state.equals(ResultState.success);
     }
 
     public static Result success() {

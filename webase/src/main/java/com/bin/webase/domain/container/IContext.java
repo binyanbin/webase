@@ -1,6 +1,6 @@
 package com.bin.webase.domain.container;
 
-public interface ISpringContext {
+public interface IContext {
 
     <T> T getBean(Class<T> clazz);
 

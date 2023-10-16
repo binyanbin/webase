@@ -1,4 +1,4 @@
-package com.bin.webase.domain.command;
+package com.bin.webase.domain.operate;
 
 
 import com.bin.webase.domain.unitwork.Runner;

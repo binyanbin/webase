@@ -1,6 +1,6 @@
 package com.bin.webase.exception;
 
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.container.Container;
 
 import java.util.Collection;
 
@@ -49,10 +49,10 @@ public class ErrorCheck {
     }
 
     public static void checkDuplicateOperate(String key) {
-        if (DomainRegistry.getCacheBean().hasKey(key)) {
+        if (Container.getCacheBean().hasKey(key)) {
             throw new ApplicationException(ErrorCode.QuickOperate);
         } else {
-            DomainRegistry.getCacheBean().set(key, "", 2);
+            Container.getCacheBean().set(key, "", 2);
         }
     }
 

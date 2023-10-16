@@ -1,11 +1,10 @@
 package com.bin.webase.domain.container;
 
 
-import com.bin.webase.domain.command.model.command.BaseCommand;
+import com.bin.webase.domain.operate.model.IParam;
+import com.bin.webase.domain.operate.model.OperateId;
 import com.bin.webase.domain.entity.DbDomain;
 
-import java.util.List;
-
 public interface IBranchLog {
-    List<DbDomain> newBranchLog(BaseCommand command);
+    DbDomain newBranchLog(OperateId command, DbDomain domain, IParam param, String msg);
 }

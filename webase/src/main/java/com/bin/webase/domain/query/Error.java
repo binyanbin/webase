@@ -1,13 +1,13 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
-public class ErrorBQO extends NoResultBQO {
+public class Error extends NoResult {
 
     private String msg;
 
-    public ErrorBQO() {
+    public Error() {
     }
 
-    public ErrorBQO(Integer code, String msg) {
+    public Error(Integer code, String msg) {
         super(code);
         this.msg = msg;
     }

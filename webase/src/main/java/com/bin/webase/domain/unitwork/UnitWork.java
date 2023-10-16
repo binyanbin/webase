@@ -1,7 +1,7 @@
 package com.bin.webase.domain.unitwork;
 
 
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.container.Container;
 import com.bin.webase.domain.container.ICache;
 import com.bin.webase.domain.container.ISequence;
 import com.bin.webase.domain.entity.CacheDomain;
@@ -96,7 +96,7 @@ public class UnitWork {
                 domains.add(domain);
             }
         }
-        ICache cache = DomainRegistry.getCacheBean();
+        ICache cache = Container.getCacheBean();
         for (DomainObject domainObject : domains) {
             CacheDomain domain = domainObject.getDomain();;
             if (domainObject.getType() == DomainType.save) {

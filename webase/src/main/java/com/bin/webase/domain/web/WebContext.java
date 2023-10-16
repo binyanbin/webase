@@ -1,8 +1,9 @@
 package com.bin.webase.domain.web;
 
 
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.container.Container;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +17,12 @@ public class WebContext {
     private String versionId;
     private ApiMethodAttribute methodAttribute;
     private Long streamId;
-    private Long beginTime;
+    private Date beginTime;
     private String businessType;
 
     public WebContext() {
         parameters = new HashMap<>();
-        beginTime = System.currentTimeMillis();
+        beginTime = new Date();
     }
 
     public String getBusinessType() {
@@ -74,7 +75,7 @@ public class WebContext {
 
     public Long getStreamId() {
         if (streamId == null) {
-            streamId = DomainRegistry.getSequenceBean().newKey(this.getClass());
+            streamId = Container.getSequenceBean().newKey(this.getClass());
         }
         return streamId;
     }
@@ -83,7 +84,7 @@ public class WebContext {
         return streamId != null;
     }
 
-    public Long getBeginTime() {
+    public Date getBeginTime() {
         return beginTime;
     }
 }

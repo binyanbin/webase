@@ -1,6 +1,6 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
-public class TestExceptionBQO extends ErrorBQO {
+public class TestException extends Error {
     private String stack;
 
     public String getStack() {

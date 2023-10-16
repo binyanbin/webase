@@ -2,8 +2,8 @@ package com.bin.webase.domain.entity;
 
 
 import com.alibaba.fastjson.JSON;
-import com.bin.webase.domain.command.UnitWorkUtils;
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.operate.UnitWorkUtils;
+import com.bin.webase.domain.container.Container;
 
 /**
  * 基于缓存存储的业务对象
@@ -25,7 +25,7 @@ public abstract class CacheDomain<T extends UniqueId> implements UniqueId {
             if (cacheDomain != null && !cacheDomain.isNull()) {
                 this.model = (T) cacheDomain.getModel();
             } else {
-                String json = DomainRegistry.getCacheBean().get(id);
+                String json = Container.getCacheBean().get(id);
                 this.model = JSON.parseObject(json, clazz);
             }
         }

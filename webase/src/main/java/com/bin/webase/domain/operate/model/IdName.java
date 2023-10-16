@@ -1,4 +1,4 @@
-package com.bin.webase.domain.command.model.command;
+package com.bin.webase.domain.operate.model;
 
 public class IdName<T> {
     private final T id;

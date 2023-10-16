@@ -1,14 +1,14 @@
-package com.bin.webase.domain.bqo;
+package com.bin.webase.domain.query;
 
 import com.bin.webase.domain.entity.FunctionObject;
 
 
-public abstract class FunctionBQO<T> extends FunctionObject {
+public abstract class FunctionQuery<T> extends FunctionObject {
 
     private T data;
     private final Integer code;
 
-    public FunctionBQO() {
+    public FunctionQuery() {
         super();
         this.code = 0;
     }

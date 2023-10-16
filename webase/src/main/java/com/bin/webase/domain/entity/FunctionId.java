@@ -1,7 +1,7 @@
 package com.bin.webase.domain.entity;
 
-import com.bin.webase.domain.command.model.command.IdName;
-import com.bin.webase.domain.container.DomainRegistry;
+import com.bin.webase.domain.operate.model.IdName;
+import com.bin.webase.domain.container.Container;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ public class FunctionId {
         if (!mapFunctionId.containsKey(id)) {
             mapFunctionId.put(id, result);
         } else {
-            DomainRegistry.error("Function[" + id + "]已定义");
+            Container.error("Function[" + id + "]已定义");
         }
         return result;
     }
