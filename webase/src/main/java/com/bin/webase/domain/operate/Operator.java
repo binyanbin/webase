@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 操作
  */
-public abstract class Operator<C extends IParam> extends BaseContainer {
+public abstract class Operator<C extends IParam> extends BaseOperate {
     private static final NoParam NO_PARAM = new NoParam();
 
     /**
@@ -41,7 +41,7 @@ public abstract class Operator<C extends IParam> extends BaseContainer {
         param.validate();
         Result result = dispose(param);
         if (result.getState() != ResultState.fail) {
-           UnitWorkUtils.commit();
+            UnitWorkUtils.commit();
         }
         return result;
     }
@@ -84,7 +84,7 @@ public abstract class Operator<C extends IParam> extends BaseContainer {
         Container.getBranchLog().newBranchLog(getCommandId(), domain, param, msg);
     }
 
-    protected List<FunctionId> getFunctionIds() {
+    protected List<FunctionId> getFunction() {
         return new ArrayList<>();
     }
 
@@ -107,12 +107,11 @@ public abstract class Operator<C extends IParam> extends BaseContainer {
     }
 
     private void validateFunction() {
-        List<FunctionId> functionIds = getFunctionIds();
-        if (functionIds.size() > 0) {
+        List<FunctionId> functionIds = getFunction();
+        if (functionIds != null && functionIds.size() > 0){
             ApiToken token = getToken();
             if (token != null) {
                 boolean haveFunction = false;
-                ErrorCheck.checkNotNull(token, ErrorCode.LoginError);
                 for (FunctionId functionId : functionIds) {
                     haveFunction = token.validFunction(functionId);
                     if (haveFunction) {

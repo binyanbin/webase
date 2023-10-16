@@ -11,7 +11,7 @@ import com.bin.webase.domain.operate.model.OperateId;
 
 import java.util.Date;
 
-public abstract class Method extends BaseContainer {
+public abstract class Method extends BaseOperate {
 
     protected OperateId operateId;
 

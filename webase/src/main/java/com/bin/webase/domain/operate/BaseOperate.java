@@ -11,7 +11,7 @@ import com.bin.webase.domain.unitwork.Runner;
 /**
  * 执行容器
  */
-class BaseContainer {
+class BaseOperate {
     public void save(DbDomain domain) {
         UnitWorkUtils.save(domain);
     }

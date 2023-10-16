@@ -26,7 +26,6 @@ public abstract class FunctionObject {
                 token = webContext.getToken();
                 if (token != null) {
                     boolean haveFunction = false;
-                    ErrorCheck.checkNotNull(token, ErrorCode.LoginError);
                     for (FunctionId functionId : functionIds) {
                         haveFunction = token.validFunction(functionId);
                         if (haveFunction) {
