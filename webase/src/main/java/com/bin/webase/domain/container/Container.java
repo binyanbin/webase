@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class Container {
 
-    private final static Map<String, Object> beanContainer = new HashMap<>();
+    private final static Map<String, IRepository> repositories = new HashMap<>();
     private static ISequence sequence;
     private static ICache cache;
     private static IBranchLog branchLog;
@@ -28,13 +28,10 @@ public class Container {
         }
     }
 
-    public static void put(Object bean) {
-        beanContainer.put(bean.getClass().getName(), bean);
-    }
 
     public static <T extends IRepository> T getRepository(Class<T> clazz) {
-        if (beanContainer.containsKey(clazz.getName())) {
-            return (T) beanContainer.get(clazz.getName());
+        if (repositories.containsKey(clazz.getName())) {
+            return (T) repositories.get(clazz.getName());
         }
         return null;
     }
@@ -81,17 +78,15 @@ public class Container {
             throw new Exception(errorMsg.toString());
         }
         springContext = sc;
-        Map<String, IRepository> mapRepository = new HashMap<>();
         for (String packageName : packageNames) {
             Reflections f = new Reflections(packageName.trim());
             Set<Class<?>> set = f.getTypesAnnotatedWith(DoRepository.class);
             for (Class<?> c : set) {
                 if (c.getClass().equals(IRepository.class.getClass())) {
                     Object bean = Container.getContainBean(c);
-                    Container.put(bean);
                     IRepository repository = (IRepository) bean;
-                    ErrorCheck.checkException(!mapRepository.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
-                    mapRepository.put(repository.getTableName(), repository);
+                    ErrorCheck.checkException(!repositories.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
+                    repositories.put(repository.getTableName(), repository);
                 }
             }
         }
@@ -114,7 +109,7 @@ public class Container {
 
         ErrorCheck.checkNotNullException(Container.sequence, "需要实现序例");
         ErrorCheck.checkNotNullException(Container.cache, "需要实现缓存");
-        for (Map.Entry<String, IRepository> entry : mapRepository.entrySet()) {
+        for (Map.Entry<String, IRepository> entry : repositories.entrySet()) {
             Container.getSequenceBean().init(entry.getValue());
         }
     }

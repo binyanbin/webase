@@ -1,6 +1,5 @@
 package com.bin.webase.domain.query;
 
-import com.bin.webase.domain.unitwork.CommitResult;
 import com.bin.webase.exception.ErrorCode;
 
 import java.math.BigDecimal;
@@ -29,18 +28,6 @@ public class QueryUtils {
 
     public static Query success(BigDecimal result) {
         return new Query<>(result);
-    }
-
-    public static NoResult response(CommitResult commitResult) {
-        if (commitResult.isSuccess()) {
-            return success();
-        } else {
-            if (commitResult.getMsg() == null || commitResult.getMsg().length() == 0) {
-                return fail(ErrorCode.UnitWorkCommitFail);
-            } else {
-                return fail(ErrorCode.UnitWorkCommitFail, commitResult.getMsg());
-            }
-        }
     }
 
     public static Error fail(ErrorCode errorCode, String msg) {
