@@ -1,7 +1,7 @@
 package com.bin.webase.core.operate;
 
 
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.IBranchLog;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.FunctionId;
@@ -78,7 +78,7 @@ public abstract class Operator<C extends IParam> extends BaseOperate {
 
 
     protected void saveBranchLog(String msg, IParam param, DbDomain domain) {
-        Container.getBranchLog().newBranchLog(getCommandId(), domain, param, msg);
+        WeContext.getBranchLog().newBranchLog(getCommandId(), domain, param, msg);
     }
 
     protected List<FunctionId> getFunction() {
@@ -123,16 +123,16 @@ public abstract class Operator<C extends IParam> extends BaseOperate {
     }
 
     protected void saveBranchLog(DbDomain domain, IParam param) {
-        IBranchLog branchLog = Container.getBranchLog();
+        IBranchLog branchLog = WeContext.getBranchLog();
         if (branchLog != null) {
-            Container.getBranchLog().newBranchLog(this.getCommandId(), domain, param, "");
+            WeContext.getBranchLog().newBranchLog(this.getCommandId(), domain, param, "");
         }
     }
 
     protected void saveBranchLog(DbDomain domain) {
-        IBranchLog branchLog = Container.getBranchLog();
+        IBranchLog branchLog = WeContext.getBranchLog();
         if (branchLog != null) {
-            Container.getBranchLog().newBranchLog(this.getCommandId(), domain, null, "");
+            WeContext.getBranchLog().newBranchLog(this.getCommandId(), domain, null, "");
         }
     }
 }

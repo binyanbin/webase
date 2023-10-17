@@ -1,6 +1,6 @@
 package com.bin.webase.exception;
 
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 
 import java.util.Collection;
 
@@ -49,10 +49,10 @@ public class ErrorCheck {
     }
 
     public static void checkDuplicateOperate(String key) {
-        if (Container.getCacheBean().hasKey(key)) {
+        if (WeContext.getCacheBean().hasKey(key)) {
             throw new ApplicationException(ErrorCode.QuickOperate);
         } else {
-            Container.getCacheBean().set(key, "", 2);
+            WeContext.getCacheBean().set(key, "", 2);
         }
     }
 

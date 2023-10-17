@@ -1,7 +1,7 @@
 package com.bin.webase.core.operate;
 
 
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.entity.CacheDomain;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.unitwork.DbObject;
@@ -17,7 +17,7 @@ import java.util.function.Function;
  */
 public class UnitWorkUtils {
 
-    private static final UnitWork UNIT_WORK = new UnitWork(Container.getSequenceBean());
+    private static final UnitWork UNIT_WORK = new UnitWork(WeContext.getSequenceBean());
 
     public static <T extends DbDomain> T getDbObject(String uniqueId) {
         return UNIT_WORK.getDbDomain(uniqueId);

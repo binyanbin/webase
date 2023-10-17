@@ -1,7 +1,7 @@
 package com.bin.webase.core.entity;
 
 import com.bin.webase.core.model.IdName;
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 
 import java.util.*;
 
@@ -14,7 +14,7 @@ public class FunctionId {
         if (!mapFunctionId.containsKey(id)) {
             mapFunctionId.put(id, result);
         } else {
-            Container.error("Function[" + id + "]已定义");
+            WeContext.error("Function[" + id + "]已定义");
         }
         return result;
     }

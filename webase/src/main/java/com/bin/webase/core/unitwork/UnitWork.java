@@ -1,7 +1,7 @@
 package com.bin.webase.core.unitwork;
 
 
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.ICache;
 import com.bin.webase.core.context.ISequence;
 import com.bin.webase.core.entity.CacheDomain;
@@ -102,7 +102,7 @@ public class UnitWork {
                 domains.add(domain);
             }
         }
-        ICache cache = Container.getCacheBean();
+        ICache cache = WeContext.getCacheBean();
         for (DomainObject domainObject : domains) {
             CacheDomain domain = domainObject.getDomain();;
             if (domainObject.getType() == DomainType.save) {

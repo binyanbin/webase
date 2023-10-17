@@ -3,7 +3,7 @@ package com.bin.webase.core.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.bin.webase.core.operate.UnitWorkUtils;
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 
 /**
  * 基于缓存存储的业务对象
@@ -25,7 +25,7 @@ public abstract class CacheDomain<T extends UniqueId> implements UniqueId {
             if (cacheDomain != null && !cacheDomain.isNull()) {
                 this.model = (T) cacheDomain.getModel();
             } else {
-                String json = Container.getCacheBean().get(id);
+                String json = WeContext.getCacheBean().get(id);
                 this.model = JSON.parseObject(json, clazz);
             }
         }

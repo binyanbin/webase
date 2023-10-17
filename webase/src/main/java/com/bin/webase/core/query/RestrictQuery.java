@@ -1,7 +1,7 @@
 package com.bin.webase.core.query;
 
 import com.alibaba.fastjson.JSON;
-import com.bin.webase.core.context.Container;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.entity.FunctionObject;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
@@ -32,7 +32,7 @@ public abstract class RestrictQuery<T> extends FunctionObject {
     public RestrictQuery(String key) {
         super();
         this.key = key;
-        if (Container.getCacheBean().hasKey(getLimitKey())) {
+        if (WeContext.getCacheBean().hasKey(getLimitKey())) {
             throw new ApplicationException(ErrorCode.ServerBusy);
         }
         this.code = 0;
@@ -45,7 +45,7 @@ public abstract class RestrictQuery<T> extends FunctionObject {
 
     public void setResult(T data) {
         this.data = data;
-        String val = Container.getCacheBean().get(getDateKey());
+        String val = WeContext.getCacheBean().get(getDateKey());
         Date end = new Date();
         Long timeSpan = end.getTime() - begin.getTime();
         List<Long> saveTimeSpan  = new ArrayList<>(1);
@@ -65,9 +65,9 @@ public abstract class RestrictQuery<T> extends FunctionObject {
 
         if (average > getMaxTimeSpan()
                 && saveTimeSpan.size() > getMinCount()) {
-            Container.getCacheBean().set(getLimitKey(), average.toString(), LIMIT_TIME_SPAN);
+            WeContext.getCacheBean().set(getLimitKey(), average.toString(), LIMIT_TIME_SPAN);
         }
-        Container.getCacheBean().set(getLimitKey(), JSON.toJSONString(saveTimeSpan), LIMIT_TIME_SPAN);
+        WeContext.getCacheBean().set(getLimitKey(), JSON.toJSONString(saveTimeSpan), LIMIT_TIME_SPAN);
     }
 
 

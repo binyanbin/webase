@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Container {
+public class WeContext {
 
     private final static Map<String, IRepository> repositories = new HashMap<>();
     private static ISequence sequence;
@@ -83,7 +83,7 @@ public class Container {
             Set<Class<?>> set = f.getTypesAnnotatedWith(DoRepository.class);
             for (Class<?> c : set) {
                 if (c.getClass().equals(IRepository.class.getClass())) {
-                    Object bean = Container.getContainBean(c);
+                    Object bean = WeContext.getContainBean(c);
                     IRepository repository = (IRepository) bean;
                     ErrorCheck.checkException(!repositories.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
                     repositories.put(repository.getClass().getName(), repository);
@@ -93,24 +93,24 @@ public class Container {
 
         ISequence sequence = sc.getBean(ISequence.class);
         if (sequence != null) {
-            Container.sequence = sequence;
+            WeContext.sequence = sequence;
         }
 
         ICache cache = sc.getBean(ICache.class);
         if (cache != null) {
-            Container.cache = cache;
+            WeContext.cache = cache;
         }
 
         IBranchLog branchLog = sc.getBean(IBranchLog.class);
         if (branchLog != null) {
-            Container.branchLog = branchLog;
+            WeContext.branchLog = branchLog;
         }
 
 
-        ErrorCheck.checkNotNullException(Container.sequence, "需要实现序例");
-        ErrorCheck.checkNotNullException(Container.cache, "需要实现缓存");
+        ErrorCheck.checkNotNullException(WeContext.sequence, "需要实现序例");
+        ErrorCheck.checkNotNullException(WeContext.cache, "需要实现缓存");
         for (Map.Entry<String, IRepository> entry : repositories.entrySet()) {
-            Container.getSequenceBean().init(entry.getValue());
+            WeContext.getSequenceBean().init(entry.getValue());
         }
     }
 }
