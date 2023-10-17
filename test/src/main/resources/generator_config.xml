@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!-- !!!! Driver Class Path !!!! -->
+    <!--注意驱动版本，如果是6版本，则不会生成enableDeleteByPrimaryKey，enableSelectByPrimaryKey，enableUpdateByPrimaryKey代码-->
+    <classPathEntry
+            location="C:\Users\yanbi\.m2\repository\mysql\mysql-connector-java\8.0.22\mysql-connector-java-8.0.22.jar"/>
+
+    <context id="mysql_material_context" targetRuntime="MyBatis3">
+        <!--自定义插件-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- !!!! Database Configurations !!!! -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;"
+                        userId="root" password="Root@123456"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- !!!! Model Configurations !!!! -->
+        <javaModelGenerator targetPackage="com.bin.api.dao.mybatis.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="mapUnderscoreToCamelCase" value="true"/>
+        </javaModelGenerator>
+
+        <!-- !!!! Mapper XML Configurations !!!! -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- !!!! Mapper Interface Configurations !!!! -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.bin.api.dao.mybatis.base"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table tableName="pl_branch" domainObjectName="Branch"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_guest" domainObjectName="Guest"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_user" domainObjectName="User"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_guest_branch" domainObjectName="GuestBranch"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_session" domainObjectName="Session"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_employee" domainObjectName="Employee"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_employee_function" domainObjectName="EmployeeFunction"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_branch_log" domainObjectName="BranchLog"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_dynamic_setting" domainObjectName="DynamicSetting"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="pl_role" domainObjectName="Role"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="bi_campus" domainObjectName="Campus"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="bi_course" domainObjectName="Course"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="bi_class_type" domainObjectName="ClassType"
+               enableCountByExample="true" enableDeleteByExample="true"
+               enableSelectByExample="true" enableDeleteByPrimaryKey="true"
+               enableUpdateByPrimaryKey="true" enableInsert="true"
+               enableSelectByPrimaryKey="true" enableUpdateByExample="true">
+        </table>
+    </context>
+</generatorConfiguration>

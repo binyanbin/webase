@@ -1,0 +1,135 @@
+CREATE TABLE `pl_branch` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`name` VARCHAR(128) NOT NULL COMMENT '名称' ,
+	`introduce` VARCHAR(500) NOT NULL,
+	`status_id` INT(10) NOT NULL COMMENT '状态',
+	`created_by` BIGINT(19) NOT NULL COMMENT '创建人',
+	`created_time` DATETIME NOT NULL COMMENT '创建时间',
+	`updated_by` BIGINT(19) NOT NULL COMMENT '更新人',
+	`updated_time` DATETIME NOT NULL COMMENT '更新时间',
+	`address` VARCHAR(200) NOT NULL COMMENT '地址',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_branch_log` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`created_by` BIGINT(19) NOT NULL COMMENT '创建人',
+	`created_time` DATETIME NOT NULL COMMENT '创建时间',
+	`branch_id` BIGINT(19) NOT NULL COMMENT '门店id',
+	`event_id` INT(10) NOT NULL COMMENT '事件id',
+	`event_name` VARCHAR(32) NOT NULL COMMENT '事件名称',
+	`client_type` INT(10) NOT NULL COMMENT '客户端类型',
+	`remark` VARCHAR(128) NOT NULL COMMENT '备注信息',
+	`log_id` VARCHAR(128) NOT NULL COMMENT '日志标识name+id',
+	`info` VARCHAR(2000) NOT NULL COMMENT '参数',
+	`model_val` VARCHAR(2000) NOT NULL COMMENT '数据json',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_employee` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`name` VARCHAR(32) NOT NULL COMMENT '名称',
+	`phone` VARCHAR(32) NOT NULL COMMENT '手机号',
+	`status_id` INT(10) NOT NULL COMMENT '状态',
+	`user_id` BIGINT(19) NOT NULL COMMENT '账户标识',
+	`role_id` BIGINT(19) NOT NULL COMMENT '角色标识',
+	`branch_id` BIGINT(19) NOT NULL COMMENT '所属门店',
+	`revision` INT(10) NOT NULL COMMENT '乐观锁',
+	`created_by` BIGINT(19) NOT NULL COMMENT '创建人',
+	`created_time` DATETIME NOT NULL COMMENT '创建时间',
+	`updated_by` BIGINT(19) NOT NULL COMMENT '更新人',
+	`updated_time` DATETIME NOT NULL COMMENT '更新时间',
+	`code` VARCHAR(32) NOT NULL COMMENT '编码',
+	`sex` VARCHAR(32) NULL DEFAULT NULL COMMENT '性别',
+	`department_id` BIGINT(19) NOT NULL COMMENT '部门',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_employee_function` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`function_id` INT(10) NOT NULL DEFAULT '0' COMMENT '权限标识',
+	`employee_id` BIGINT(19) NOT NULL COMMENT '员工标识',
+	`user_id` BIGINT(19) NOT NULL COMMENT '账户标识',
+	`branch_id` BIGINT(19) NOT NULL COMMENT '门店标识',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_user` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`phone` VARCHAR(32) NOT NULL COMMENT '手机号',
+	`password` VARCHAR(128) NOT NULL COMMENT '密码',
+	`last_login_time` DATETIME NULL DEFAULT NULL COMMENT '最后登陆时间',
+	`status_id` INT(10) NOT NULL COMMENT '状态',
+	`revision` INT(10) NOT NULL COMMENT '乐观锁',
+	`created_by` BIGINT(19) NOT NULL COMMENT '创建人',
+	`created_time` DATETIME NOT NULL COMMENT '创建时间',
+	`updated_by` BIGINT(19) NOT NULL COMMENT '更新人',
+	`updated_time` DATETIME NOT NULL COMMENT '更新时间',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_guest` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`open_id` VARCHAR(60) NOT NULL,
+	`name` VARCHAR(60) NOT NULL,
+	`phone` VARCHAR(32) NOT NULL COMMENT '手机号',
+	`branch_id` BIGINT(19) NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_guest_branch` (
+	`id` BIGINT(19) NOT NULL,
+	`guest_id` BIGINT(19) NOT NULL,
+	`branch_id` BIGINT(19) NOT NULL,
+	`is_current` INT(10) NOT NULL,
+	`created_time` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `pl_session` (
+	`id` BIGINT(19) NOT NULL COMMENT '标识',
+	`session_id` VARCHAR(128) NULL DEFAULT NULL COMMENT '会话id',
+	`user_id` BIGINT(19) NOT NULL COMMENT '账户标识',
+	`client_type` INT(10) NOT NULL COMMENT '客户端类型',
+	`device_id` VARCHAR(128) NULL DEFAULT NULL COMMENT '设备id',
+	`version_id` VARCHAR(50) NOT NULL DEFAULT '' COMMENT '版本id',
+	`secret_key` VARCHAR(128) NOT NULL COMMENT '密鑰',
+	`branch_id` BIGINT(19) NULL DEFAULT NULL COMMENT '门店id',
+	`employee_id` BIGINT(19) NULL DEFAULT NULL COMMENT '员工id',
+	`revision` INT(10) NOT NULL COMMENT '乐观锁',
+	`created_time` DATETIME NOT NULL COMMENT '创建时间',
+	`updated_time` DATETIME NOT NULL COMMENT '更新时间',
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `bi_course` (
+	`id` BIGINT(19) NOT NULL,
+	`branch_id` BIGINT(19) NOT NULL,
+	`status_id` INT(10) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	`period` VARCHAR(200) NOT NULL,
+	`introduce` VARCHAR(5000) NOT NULL,
+	`need_to_know` VARCHAR(5000) NOT NULL,
+	`class_type_id` BIGINT(19) NOT NULL,
+	`created_by` BIGINT(19) NOT NULL,
+	`created_time` DATETIME NOT NULL,
+	`updated_by` BIGINT(19) NOT NULL,
+	`updated_time` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `bi_campus` (
+	`id` BIGINT(19) NOT NULL,
+	`branch_id` BIGINT(19) NOT NULL,
+	`status_id` INT(10) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	`address` VARCHAR(200) NOT NULL,
+	`created_by` BIGINT(19) NOT NULL,
+	`created_time` DATETIME NOT NULL,
+	`updated_by` BIGINT(19) NOT NULL,
+	`updated_time` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
+CREATE TABLE `bi_class_type` (
+	`id` BIGINT(19) NOT NULL,
+	`branch_id` BIGINT(19) NOT NULL,
+	`status_id` INT(10) NOT NULL,
+	`name` VARCHAR(50) NOT NULL,
+	`description` VARCHAR(200) NOT NULL,
+	`created_by` BIGINT(19) NOT NULL,
+	`created_time` DATETIME NOT NULL,
+	`updated_by` BIGINT(19) NOT NULL,
+	`updated_time` DATETIME NOT NULL,
+	PRIMARY KEY (`id`) USING BTREE
+);
