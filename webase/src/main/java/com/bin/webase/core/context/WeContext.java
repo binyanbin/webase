@@ -14,7 +14,7 @@ public class WeContext {
 
     private final static Map<String, IRepository> repositories = new HashMap<>();
     private static ISequence sequence;
-    private static ICache cache;
+    private static ICacheRepository cache;
     private static IBranchLog branchLog;
     private static IContext springContext;
     private static StringBuilder errorMsg;
@@ -45,7 +45,7 @@ public class WeContext {
         return sequence;
     }
 
-    public static ICache getCacheBean() {
+    public static ICacheRepository getCacheBean() {
         return cache;
     }
 
@@ -96,7 +96,7 @@ public class WeContext {
             WeContext.sequence = sequence;
         }
 
-        ICache cache = sc.getBean(ICache.class);
+        ICacheRepository cache = sc.getBean(ICacheRepository.class);
         if (cache != null) {
             WeContext.cache = cache;
         }

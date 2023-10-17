@@ -1,7 +1,7 @@
 package com.bin.api.web.base;
 
 
-import com.bin.webase.core.context.ICache;
+import com.bin.webase.core.context.ICacheRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -9,10 +9,10 @@ import org.springframework.util.StringUtils;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class CacheRepository implements ICache {
+public class CacheRepositoryRepository implements ICacheRepository {
     private final StringRedisTemplate redisTemplate;
 
-    public CacheRepository(StringRedisTemplate redisTemplate) {
+    public CacheRepositoryRepository(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

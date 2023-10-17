@@ -5,7 +5,7 @@ package com.bin.webase.core.context;
  * @author yanbin
  * @date 2017/7/1
  */
-public interface ICache {
+public interface ICacheRepository {
 
     /**
      * 获得缓存值
