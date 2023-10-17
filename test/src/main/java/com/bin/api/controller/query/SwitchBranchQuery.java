@@ -1,15 +1,16 @@
 package com.bin.api.controller.query;
 
+import com.bin.api.dao.repository.view.UserQueryView;
 import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.web.base.FunctionDef;
-import com.bin.api.dao.repository.view.UserQueryView;
+import com.bin.webase.core.entity.FunctionId;
 import com.bin.webase.core.model.IdName;
-import com.bin.webase.core.query.FunctionQuery;
-
+import com.bin.webase.core.query.Query;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class SwitchBranchQuery extends FunctionQuery<List<IdName<Long>>> {
+public class SwitchBranchQuery extends Query<List<IdName<Long>>> {
 
     public SwitchBranchQuery() {
         super();
@@ -23,7 +24,7 @@ public class SwitchBranchQuery extends FunctionQuery<List<IdName<Long>>> {
     }
 
     @Override
-    public void initFunction() {
-        addFunction(FunctionDef.GUEST_VISIT);
+    protected List<FunctionId> getFunctionId() {
+        return Lists.newArrayList(FunctionDef.GUEST_VISIT);
     }
 }

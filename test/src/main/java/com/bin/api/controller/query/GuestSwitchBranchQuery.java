@@ -3,12 +3,12 @@ package com.bin.api.controller.query;
 import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.dao.repository.view.UserQueryView;
 import com.bin.webase.core.model.IdName;
-import com.bin.webase.core.query.FunctionQuery;
+import com.bin.webase.core.query.Query;
 
 
 import java.util.List;
 
-public class GuestSwitchBranchQuery extends FunctionQuery<List<IdName<Long>>> {
+public class GuestSwitchBranchQuery extends Query<List<IdName<Long>>> {
 
     public GuestSwitchBranchQuery() {
         super();

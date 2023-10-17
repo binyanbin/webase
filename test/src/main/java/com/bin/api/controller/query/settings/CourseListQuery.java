@@ -6,13 +6,13 @@ import com.bin.api.dao.mybatis.model.ClassType;
 import com.bin.api.dao.mybatis.model.Course;
 import com.bin.api.dao.repository.view.BranchView;
 import com.bin.api.utils.CollectionTransferUtils;
-import com.bin.webase.core.query.FunctionQuery;
+import com.bin.webase.core.query.Query;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 import java.util.Map;
 
-public class CourseListQuery extends FunctionQuery<List<CourseVo>> {
+public class CourseListQuery extends Query<List<CourseVo>> {
     public CourseListQuery() {
         super();
         WebSession webSession = getToken(WebSession.class);

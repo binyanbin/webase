@@ -1,9 +1,9 @@
 import com.bin.api.Application;
 import com.bin.api.controller.param.*;
-import com.bin.api.operate.domain.cache.WebSessionDo;
+import com.bin.api.controller.query.settings.CampusListQuery;
 import com.bin.api.operate.base.LoginOp;
+import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.setting.*;
-
 import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.operate.Result;
 import org.assertj.core.util.Lists;
@@ -77,6 +77,7 @@ public class BiSettingTest extends BaseTest {
         Assert.assertTrue(WeContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
 
         Assert.assertTrue(WeContext.getBean(DeleteCampusOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(new CampusListQuery().getCode() == 0);
     }
 
     @Test

@@ -1,16 +1,16 @@
 package com.bin.api.controller.query.settings;
 
 import com.bin.api.controller.query.settings.vo.CampusVo;
-import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.dao.mybatis.model.Campus;
 import com.bin.api.dao.repository.view.BranchView;
-import com.bin.api.web.base.FunctionDef;
-import com.bin.webase.core.query.FunctionQuery;
+import com.bin.api.operate.domain.cache.WebSession;
+import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.query.Query;
 import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class CampusListQuery extends FunctionQuery<List<CampusVo>> {
+public class CampusListQuery extends Query<List<CampusVo>> {
 
     public CampusListQuery() {
         super();
@@ -25,7 +25,7 @@ public class CampusListQuery extends FunctionQuery<List<CampusVo>> {
     }
 
     @Override
-    public void initFunction() {
-        addFunction(FunctionDef.CAMPUS_MANAGE);
+    protected List<FunctionId> getFunctionId() {
+        return Lists.newArrayList(FunctionId.ERROR_FUNCTION);
     }
 }
