@@ -106,19 +106,7 @@ public abstract class Operator<C extends IParam> extends BaseOperate {
     private void validateFunction() {
         List<FunctionId> functionIds = getFunction();
         if (functionIds != null && functionIds.size() > 0){
-            ApiToken token = getToken();
-            if (token != null) {
-                boolean haveFunction = false;
-                for (FunctionId functionId : functionIds) {
-                    haveFunction = token.validFunction(functionId);
-                    if (haveFunction) {
-                        break;
-                    }
-                }
-                ErrorCheck.check(haveFunction, ErrorCode.NoFunctionID);
-            } else {
-                throw new ApplicationException(ErrorCode.NoFunctionID);
-            }
+            ErrorCheck.check(FunctionId.validate(getToken(), functionIds),ErrorCode.NoFunctionID);
         }
     }
 

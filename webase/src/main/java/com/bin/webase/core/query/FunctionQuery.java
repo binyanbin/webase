@@ -1,9 +1,17 @@
 package com.bin.webase.core.query;
 
-import com.bin.webase.core.entity.FunctionObject;
+import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.web.ApiToken;
+import com.bin.webase.core.web.ThreadWebContextHolder;
+import com.bin.webase.core.web.WebContext;
+import com.bin.webase.exception.ErrorCheck;
+import com.bin.webase.exception.ErrorCode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public abstract class FunctionQuery<T> extends FunctionObject {
+public abstract class FunctionQuery<T> {
 
     private T data;
     private final Integer code;
@@ -23,5 +31,35 @@ public abstract class FunctionQuery<T> extends FunctionObject {
 
     public Integer getCode() {
         return code;
+    }
+
+
+    private ApiToken token;
+    private List<FunctionId> functionIds;
+
+    public void validate() {
+        functionIds = new ArrayList<>();
+        initFunction();
+        if (functionIds.size() > 0) {
+            WebContext webContext = ThreadWebContextHolder.getContext();
+            token = webContext.getToken();
+            ErrorCheck.check(FunctionId.validate(token, functionIds), ErrorCode.NoFunctionID);
+        }
+    }
+
+    protected ApiToken getToken() {
+        return token;
+    }
+
+    protected <T> T getToken(Class<T> clazz) {
+        return (T) token;
+    }
+
+    protected void addFunction(FunctionId functionId) {
+        functionIds.add(functionId);
+    }
+
+    public void initFunction() {
+
     }
 }

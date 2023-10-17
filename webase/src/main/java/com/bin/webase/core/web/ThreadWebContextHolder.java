@@ -11,7 +11,7 @@ public class ThreadWebContextHolder {
         if (THREAD_LOCAL.get() != null) {
             return THREAD_LOCAL.get();
         } else {
-            throw new ApplicationException(ErrorCode.NoWebContent);
+            throw new ApplicationException(ErrorCode.NoFunctionID);
         }
     }
 

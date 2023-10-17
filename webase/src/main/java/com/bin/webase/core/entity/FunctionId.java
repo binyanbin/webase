@@ -2,6 +2,10 @@ package com.bin.webase.core.entity;
 
 import com.bin.webase.core.model.IdName;
 import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.web.ApiToken;
+import com.bin.webase.exception.ApplicationException;
+import com.bin.webase.exception.ErrorCheck;
+import com.bin.webase.exception.ErrorCode;
 
 import java.util.*;
 
@@ -33,6 +37,17 @@ public class FunctionId {
             result.add(entry.getValue());
         }
         return result;
+    }
+
+    public static boolean validate(ApiToken token,List<FunctionId> functionIds){
+        if (token != null) {
+            for (FunctionId functionId : functionIds) {
+                if (token.validFunction(functionId)) {
+                   return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static FunctionId parse(Integer id) {

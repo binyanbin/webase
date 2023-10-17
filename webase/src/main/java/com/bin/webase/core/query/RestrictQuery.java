@@ -2,7 +2,6 @@ package com.bin.webase.core.query;
 
 import com.alibaba.fastjson.JSON;
 import com.bin.webase.core.context.WeContext;
-import com.bin.webase.core.entity.FunctionObject;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public abstract class RestrictQuery<T> extends FunctionObject {
+public abstract class RestrictQuery<T> {
 
     private T data;
     private Integer code;
