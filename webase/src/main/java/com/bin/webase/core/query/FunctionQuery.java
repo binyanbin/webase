@@ -1,6 +1,7 @@
 package com.bin.webase.core.query;
 
 import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.operate.IParam;
 import com.bin.webase.core.web.ApiToken;
 import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.core.web.WebContext;
@@ -18,6 +19,14 @@ public abstract class FunctionQuery<T> {
 
     public FunctionQuery() {
         super();
+        validate();
+        this.code = 0;
+    }
+
+    public FunctionQuery(IParam param) {
+        super();
+        param.validate();
+        validate();
         this.code = 0;
     }
 
@@ -37,7 +46,7 @@ public abstract class FunctionQuery<T> {
     private ApiToken token;
     private List<FunctionId> functionIds;
 
-    public void validate() {
+    protected void validate() {
         functionIds = new ArrayList<>();
         initFunction();
         if (functionIds.size() > 0) {
