@@ -86,7 +86,7 @@ public class Container {
                     Object bean = Container.getContainBean(c);
                     IRepository repository = (IRepository) bean;
                     ErrorCheck.checkException(!repositories.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
-                    repositories.put(repository.getTableName(), repository);
+                    repositories.put(repository.getClass().getName(), repository);
                 }
             }
         }
