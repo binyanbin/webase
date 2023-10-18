@@ -3,6 +3,7 @@ package com.bin.webase.core.model;
 import com.bin.webase.core.web.ApiToken;
 import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.core.web.WebContext;
+import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCheck;
 import com.bin.webase.exception.ErrorCode;
 
@@ -17,7 +18,7 @@ public abstract class FunctionObject {
         if (token != null) {
             return (T) token;
         } else {
-            return null;
+            throw new ApplicationException(ErrorCode.NoFunctionID);
         }
     }
 

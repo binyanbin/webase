@@ -11,8 +11,8 @@ import com.bin.webase.core.model.IParam;
 import com.bin.webase.core.model.NoParam;
 import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.web.ApiToken;
-import com.bin.webase.core.web.ThreadWebContextHolder;
-import com.bin.webase.core.web.WebContext;
+import com.bin.webase.exception.ApplicationException;
+import com.bin.webase.exception.ErrorCode;
 
 import java.util.Date;
 
@@ -22,14 +22,8 @@ import java.util.Date;
 public abstract class Operator<C extends IParam> extends BaseOperate {
 
 
-    /**
-     * 执行方法实现
-     */
     protected abstract Result dispose(C param);
 
-    /**
-     * 命令执行
-     */
     public Result execute(C param) {
         validateFunction();
         param.validate();
@@ -57,40 +51,24 @@ public abstract class Operator<C extends IParam> extends BaseOperate {
     protected abstract OperateId getCommandId();
 
 
-    protected boolean isSameBranch(IBranch iBranch) {
-        WebContext webContext = ThreadWebContextHolder.getContext();
-        if (webContext != null) {
-            ApiToken token = webContext.getToken();
-            if (token != null) {
-                if (token instanceof IBranch) {
-                    IBranch mToken = (IBranch) token;
-                    if (mToken.getBranchId() != null && iBranch.getBranchId() != null) {
-                        return iBranch.getBranchId().equals(mToken.getBranchId());
-                    }
-                }
+    protected <T extends ApiToken> boolean isSameBranch(Class<T> clazz, IBranch iBranch) {
+        T token = getToken(clazz);
+        if (token instanceof IBranch) {
+            IBranch mToken = (IBranch) token;
+            if (mToken.getBranchId() != null && iBranch.getBranchId() != null) {
+                return iBranch.getBranchId().equals(mToken.getBranchId());
             }
         }
         return false;
     }
 
-
-    protected void saveBranchLog(String msg, IParam param, DbDomain domain) {
+    protected void saveBranchLog(DbDomain domain, IParam param, String msg) {
+        IBranchLog branchLog = WeContext.getBranchLog();
+        if (branchLog == null) {
+            throw new ApplicationException(ErrorCode.NullPointerException, "日志接口未实现");
+        }
         WeContext.getBranchLog().newBranchLog(getCommandId(), domain, param, msg);
     }
 
-
-    protected void saveBranchLog(DbDomain domain, IParam param) {
-        IBranchLog branchLog = WeContext.getBranchLog();
-        if (branchLog != null) {
-            WeContext.getBranchLog().newBranchLog(this.getCommandId(), domain, param, "");
-        }
-    }
-
-    protected void saveBranchLog(DbDomain domain) {
-        IBranchLog branchLog = WeContext.getBranchLog();
-        if (branchLog != null) {
-            WeContext.getBranchLog().newBranchLog(this.getCommandId(), domain, null, "");
-        }
-    }
 }
 
