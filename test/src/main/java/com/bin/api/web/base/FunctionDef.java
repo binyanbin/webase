@@ -1,6 +1,6 @@
 package com.bin.api.web.base;
 
-import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.model.FunctionId;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

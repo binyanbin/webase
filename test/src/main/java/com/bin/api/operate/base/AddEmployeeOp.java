@@ -9,7 +9,7 @@ import com.bin.api.web.base.OperateDef;
 
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +24,7 @@ public class AddEmployeeOp extends Operator<EmployeeParam> {
         String code = StrUtils.generateNumberString(8);
         ActiveEmployeeDo activeEmployee = new ActiveEmployeeDo(employee.getId(), code);
         save(activeEmployee);
-        saveBranchLog(employee, param);
+        saveBranchLog(employee, param,"");
         return new Result(activeEmployee.getModel());
     }
 

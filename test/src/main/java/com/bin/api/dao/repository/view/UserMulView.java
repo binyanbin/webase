@@ -5,26 +5,26 @@ import com.bin.api.operate.domain.db.EmployeeDo;
 import com.bin.api.dao.mybatis.model.Employee;
 import com.bin.webase.core.model.IdName;
 
-import com.bin.webase.core.query.QueryView;
+import com.bin.webase.core.query.MulView;
 import org.assertj.core.util.Lists;
 
 import java.util.List;
 
-public class UserQueryView extends QueryView<Long, Employee> {
+public class UserMulView extends MulView<Long, Employee> {
 
 
     private List<IdName<Long>> branches;
 
-    public UserQueryView(Long userId) {
+    public UserMulView(Long userId) {
         super(userId);
-        root = EmployeeDo.REPOSITORY.listByUserId(userId);
+        list = EmployeeDo.REPOSITORY.listByUserId(userId);
     }
 
 
     public List<IdName<Long>> listBranch() {
         if (branches == null) {
             List<Long> branchIds = Lists.newArrayList();
-            for (Employee employee : root) {
+            for (Employee employee : list) {
                 branchIds.add(employee.getBranchId());
             }
             branches = BranchDo.REPOSITORY.listByIds(branchIds);

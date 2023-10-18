@@ -4,7 +4,7 @@ import com.bin.api.dao.mybatis.model.Session;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.domain.db.SessionDo;
 import com.bin.webase.core.operate.Method;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 
 import java.util.Date;
 import java.util.List;

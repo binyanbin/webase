@@ -1,6 +1,5 @@
-package com.bin.api.web;
+package com.bin.api.web.base;
 
-import com.bin.api.web.base.Context;
 import com.bin.webase.core.context.IContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -12,16 +11,16 @@ import org.springframework.stereotype.Component;
 public class ApplicationContextHolder implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
-    private static Context springContext;
+    private static ContextImp springContextImp;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         ApplicationContextHolder.applicationContext = applicationContext;
-        ApplicationContextHolder.springContext = new Context(applicationContext);
+        ApplicationContextHolder.springContextImp = new ContextImp(applicationContext);
     }
 
     public static <T> T getBean(Class<T> clazz) {
-        return springContext.getBean(clazz);
+        return springContextImp.getBean(clazz);
     }
 
 
@@ -30,7 +29,7 @@ public class ApplicationContextHolder implements ApplicationContextAware {
     }
 
     public static IContext getSpringContext() {
-        return springContext;
+        return springContextImp;
     }
 }
 

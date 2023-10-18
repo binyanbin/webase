@@ -5,12 +5,12 @@ import com.bin.api.operate.domain.db.CampusDo;
 import com.bin.api.operate.domain.db.ClassTypeDo;
 import com.bin.api.operate.domain.db.CourseDo;
 import com.bin.api.dao.mybatis.model.*;
-import com.bin.webase.core.query.View;
+import com.bin.webase.core.query.ModelView;
 
 import java.util.List;
 
 
-public class BranchView extends View<Branch> {
+public class BranchView extends ModelView<Branch> {
     private List<Campus> campuses;
     private List<ClassType> classTypes;
     private List<Course> courses;
@@ -21,25 +21,24 @@ public class BranchView extends View<Branch> {
 
     public List<Campus> listCampus() {
         if (campuses == null) {
-            campuses = CampusDo.REPOSITORY.listByBranchId(root.getId());
+            campuses = CampusDo.REPOSITORY.listByBranchId(model.getId());
         }
         return campuses;
     }
 
     public List<ClassType> listClassType() {
         if (classTypes == null) {
-            classTypes = ClassTypeDo.REPOSITORY.listByBranchId(root.getId());
+            classTypes = ClassTypeDo.REPOSITORY.listByBranchId(model.getId());
         }
         return classTypes;
     }
 
     public List<Course> listCourse() {
         if (courses == null) {
-            courses = CourseDo.REPOSITORY.listByBranchId(root.getId());
+            courses = CourseDo.REPOSITORY.listByBranchId(model.getId());
         }
         return courses;
     }
-
 
 
 }

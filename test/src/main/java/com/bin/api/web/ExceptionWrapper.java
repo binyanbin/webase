@@ -1,8 +1,8 @@
 package com.bin.api.web;
 
 
-import com.bin.webase.core.query.ErrorQuery;
-import com.bin.webase.core.query.TestException;
+import com.bin.webase.core.query.ErrorDTO;
+import com.bin.webase.core.query.TestExceptionDTO;
 import com.bin.webase.exception.ApplicationException;
 import com.bin.webase.exception.ErrorCode;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,20 +22,20 @@ import java.util.Arrays;
 
 public class ExceptionWrapper {
 
-    public static ErrorQuery getJsonExceptionWrapper(Throwable ex) {
-        ErrorQuery result = new ErrorQuery();
+    public static ErrorDTO getJsonExceptionWrapper(Throwable ex) {
+        ErrorDTO result = new ErrorDTO();
         mapDTO(ex, result);
         return result;
     }
 
-    public static TestException getJsonExceptionWrapper2(Throwable ex) {
-        TestException result = new TestException();
+    public static TestExceptionDTO getJsonExceptionWrapper2(Throwable ex) {
+        TestExceptionDTO result = new TestExceptionDTO();
         mapDTO(ex, result);
         result.setStack(Arrays.toString(ex.getStackTrace()));
         return result;
     }
 
-    private static void mapDTO(Throwable ex, ErrorQuery result) {
+    private static void mapDTO(Throwable ex, ErrorDTO result) {
         if (ex instanceof ApplicationException) {
             ApplicationException gex = (ApplicationException) ex;
             result.setCode(gex.getCode());

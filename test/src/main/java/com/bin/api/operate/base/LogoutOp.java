@@ -6,10 +6,10 @@ import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.domain.db.SessionDo;
 import com.bin.api.web.base.OperateDef;
+import com.bin.webase.core.model.NoParam;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
-import com.bin.webase.core.operate.NoParam;
-import com.bin.webase.core.operate.OperateId;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -28,7 +28,7 @@ public class LogoutOp extends Operator<NoParam> {
         }
         remove(webSession);
         if (!CollectionUtils.isEmpty(sessions)) {
-            saveBranchLog(new SessionDo(sessions.get(0)));
+            saveBranchLog(new SessionDo(sessions.get(0)), param, "");
         }
         return Result.success();
     }

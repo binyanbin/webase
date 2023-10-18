@@ -1,7 +1,7 @@
 package com.bin.api.controller.param.classroom;
 
 
-import com.bin.webase.core.operate.IParam;
+import com.bin.webase.core.model.IParam;
 import com.bin.webase.exception.ErrorCheck;
 import lombok.Data;
 

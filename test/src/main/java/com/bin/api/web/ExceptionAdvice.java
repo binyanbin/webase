@@ -1,7 +1,7 @@
 package com.bin.api.web;
 
 
-import com.bin.webase.core.query.TestException;
+import com.bin.webase.core.query.TestExceptionDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -84,7 +84,7 @@ public class ExceptionAdvice {
     }
 
     private Object wrapperException(Throwable e) {
-        TestException result = ExceptionWrapper.getJsonExceptionWrapper2(e);
+        TestExceptionDTO result = ExceptionWrapper.getJsonExceptionWrapper2(e);
         return result;
     }
 }

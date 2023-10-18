@@ -4,7 +4,7 @@ package com.bin.api.operate.base;
 import com.bin.api.controller.param.UserLoginParam;
 import com.bin.api.dao.enums.ClientType;
 import com.bin.api.dao.mybatis.model.Branch;
-import com.bin.api.dao.repository.view.EmployeeView;
+import com.bin.api.dao.repository.view.EmployeeModelView;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.domain.db.BranchDo;
 import com.bin.api.operate.domain.db.UserDo;
@@ -13,7 +13,7 @@ import com.bin.api.utils.UuidUtil;
 import com.bin.api.web.base.OperateDef;
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.exception.ErrorCheck;
 import org.springframework.stereotype.Service;
@@ -37,12 +37,12 @@ public class LoginOp extends Operator<UserLoginParam> {
         ErrorCheck.checkNotNull(branch, "门店未找到");
 
         String versionId = ThreadWebContextHolder.getContext().getVersionId();
-        EmployeeView employeeView = new EmployeeView(branch.getId(), user.getId());
+        EmployeeModelView employeeView = new EmployeeModelView(branch.getId(), user.getId());
         ErrorCheck.checkArgument(!employeeView.isRootNull(), "人员不存在");
         Set<Integer> functions = employeeView.listFunctions();
         String sessionId = UuidUtil.newUuidString();
         String secretKey = UuidUtil.newUuidString();
-        WebSessionDo webSessionDo = WebSessionDo.newInstance(sessionId, secretKey, branch.getId(), user.getId(), employeeView.getRoot().getId(), ClientType.manager.getId(), functions,
+        WebSessionDo webSessionDo = WebSessionDo.newInstance(sessionId, secretKey, branch.getId(), user.getId(), employeeView.getModel().getId(), ClientType.manager.getId(), functions,
                 getTime(), versionId);
         save(webSessionDo);
 

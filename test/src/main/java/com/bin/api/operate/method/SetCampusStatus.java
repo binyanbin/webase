@@ -3,7 +3,7 @@ package com.bin.api.operate.method;
 import com.bin.api.operate.domain.db.CampusDo;
 import com.bin.api.dao.mybatis.model.Campus;
 import com.bin.webase.core.operate.Method;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 
 
 import java.util.Date;

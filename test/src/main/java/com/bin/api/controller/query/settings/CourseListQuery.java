@@ -1,20 +1,24 @@
 package com.bin.api.controller.query.settings;
 
 import com.bin.api.controller.query.settings.vo.CourseVo;
-import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.dao.mybatis.model.ClassType;
 import com.bin.api.dao.mybatis.model.Course;
 import com.bin.api.dao.repository.view.BranchView;
+import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.utils.CollectionTransferUtils;
+import com.bin.webase.core.model.NoParam;
 import com.bin.webase.core.query.Query;
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-public class CourseListQuery extends Query<List<CourseVo>> {
-    public CourseListQuery() {
-        super();
+@Service
+public class CourseListQuery extends Query<List<CourseVo>, NoParam> {
+
+    @Override
+    protected List<CourseVo> getData(NoParam param) {
         WebSession webSession = getToken(WebSession.class);
         BranchView branchView = new BranchView(webSession.getBranchId());
         List<ClassType> classTypes = branchView.listClassType();
@@ -24,6 +28,6 @@ public class CourseListQuery extends Query<List<CourseVo>> {
         for (Course course : courses) {
             result.add(new CourseVo(course, mapType));
         }
-        setData(result);
+        return result;
     }
 }

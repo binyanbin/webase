@@ -12,7 +12,7 @@ import com.bin.api.web.base.OperateDef;
 import com.bin.api.web.base.FunctionDef;
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.exception.ErrorCheck;
 import org.assertj.core.util.Sets;

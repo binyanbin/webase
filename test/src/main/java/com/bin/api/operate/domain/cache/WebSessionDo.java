@@ -1,8 +1,8 @@
 package com.bin.api.operate.domain.cache;
 
 import com.alibaba.fastjson.JSON;
-import com.bin.webase.core.web.ApiToken;
 import com.bin.webase.core.entity.CacheDomain;
+import com.bin.webase.core.web.ApiToken;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.Date;
@@ -88,6 +88,6 @@ public class WebSessionDo extends CacheDomain<WebSession> {
     }
 
     public ApiToken toRestfulToken() {
-        return new ApiToken(getUniqueId(), getSecretKey(), model.getFunctionIds(), model.getExpirationTime(), model.getClientType());
+        return new ApiToken(getUniqueId(), getSecretKey(), model.getFunctionIds(), model.getExpirationTime());
     }
 }

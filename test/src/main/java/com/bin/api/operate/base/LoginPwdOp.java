@@ -3,7 +3,7 @@ package com.bin.api.operate.base;
 import com.bin.api.controller.param.LoginParam;
 import com.bin.api.dao.enums.ClientType;
 import com.bin.api.dao.mybatis.model.User;
-import com.bin.api.dao.repository.view.EmployeeView;
+import com.bin.api.dao.repository.view.EmployeeModelView;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.domain.db.UserDo;
 import com.bin.api.operate.method.NewSession;
@@ -11,7 +11,7 @@ import com.bin.api.utils.UuidUtil;
 import com.bin.api.web.base.OperateDef;
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.exception.ErrorCheck;
 import org.springframework.stereotype.Service;
@@ -27,13 +27,13 @@ public class LoginPwdOp extends Operator<LoginParam> {
         User user = UserDo.REPOSITORY.getByPhone(param.getPhone());
         ErrorCheck.checkNotNull(user, "用户不存在");
         ErrorCheck.checkArgument(user.getPassword().equals(param.getPassword()), "密码错误");
-        EmployeeView employeeView = new EmployeeView(param.getBranchId(),user.getId());
+        EmployeeModelView employeeView = new EmployeeModelView(param.getBranchId(),user.getId());
         ErrorCheck.checkArgument(!employeeView.isRootNull(),"人员不存在");
         String versionId = ThreadWebContextHolder.getContext().getVersionId();
         Set<Integer> functions = employeeView.listFunctions();
         String sessionId = UuidUtil.newUuidString();
         String secretKey = UuidUtil.newUuidString();
-        WebSessionDo webSessionDo = WebSessionDo.newInstance(sessionId,secretKey,param.getBranchId(), user.getId(), employeeView.getRoot().getId(), ClientType.manager.getId(), functions,
+        WebSessionDo webSessionDo = WebSessionDo.newInstance(sessionId,secretKey,param.getBranchId(), user.getId(), employeeView.getModel().getId(), ClientType.manager.getId(), functions,
                 getTime(), versionId);
         save(webSessionDo);
         UserDo userDo = new UserDo(user);

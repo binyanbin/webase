@@ -1,6 +1,6 @@
 package com.bin.api.controller.param;
 
-import com.bin.webase.core.operate.IParam;
+import com.bin.webase.core.model.IParam;
 import lombok.Data;
 
 import java.util.List;

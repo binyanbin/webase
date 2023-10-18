@@ -1,6 +1,6 @@
 package com.bin.api.web.base;
 
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

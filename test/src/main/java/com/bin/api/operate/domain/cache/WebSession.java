@@ -1,8 +1,8 @@
 package com.bin.api.operate.domain.cache;
 
-import com.bin.webase.core.web.ApiToken;
 import com.bin.webase.core.entity.IBranch;
 import com.bin.webase.core.entity.UniqueId;
+import com.bin.webase.core.web.ApiToken;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
@@ -17,12 +17,14 @@ public class WebSession extends ApiToken implements UniqueId, IBranch {
     private Long employeeId;
     @ApiModelProperty(value = "用户id")
     private Long userId;
+    private Integer clientType;
 
     public WebSession() {
     }
 
     public WebSession(String sessionId, String secretKey, Long branchId, Long userId, Long employeeId, Integer clientType, Set<Integer> functionIds, Date expirationTime, String versionId) {
-        super(sessionId, secretKey, functionIds, expirationTime.getTime(), clientType);
+        super(sessionId, secretKey, functionIds, expirationTime.getTime());
+        this.clientType = clientType;
         this.branchId = branchId;
         this.versionId = versionId;
         this.employeeId = employeeId;
@@ -41,7 +43,6 @@ public class WebSession extends ApiToken implements UniqueId, IBranch {
         return versionId;
     }
 
-
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -50,7 +51,11 @@ public class WebSession extends ApiToken implements UniqueId, IBranch {
         this.employeeId = employeeId;
     }
 
-    public WebSessionDo toDo(){
+    public Integer getClientType() {
+        return clientType;
+    }
+
+    public WebSessionDo toDo() {
         return new WebSessionDo(this);
     }
 

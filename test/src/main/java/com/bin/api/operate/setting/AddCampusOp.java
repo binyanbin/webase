@@ -4,7 +4,7 @@ import com.bin.api.controller.param.CampusParam;
 import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.operate.domain.db.CampusDo;
 import com.bin.api.web.base.OperateDef;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.operate.Operator;
 import com.bin.webase.core.operate.Result;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AddCampusOp extends Operator<CampusParam> {
         CampusDo campusDo = CampusDo.newInstance(param, webSession.getBranchId(), webSession.getEmployeeId(), getTime());
         updateState(campusDo);
         save(campusDo);
-        saveBranchLog(campusDo);
+        saveBranchLog(campusDo, param, "");
         return Result.success(campusDo.getId());
     }
 

@@ -1,7 +1,7 @@
 package com.bin.api.controller.param;
 
 
-import com.bin.webase.core.operate.IParam;
+import com.bin.webase.core.model.IParam;
 
 public class IdParam implements IParam {
     private Long id;

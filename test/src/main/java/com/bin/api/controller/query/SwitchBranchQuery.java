@@ -1,30 +1,30 @@
 package com.bin.api.controller.query;
 
-import com.bin.api.dao.repository.view.UserQueryView;
+import com.bin.api.dao.repository.view.UserMulView;
 import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.web.base.FunctionDef;
-import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.model.FunctionId;
 import com.bin.webase.core.model.IdName;
+import com.bin.webase.core.model.NoParam;
 import com.bin.webase.core.query.Query;
 import com.google.common.collect.Lists;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class SwitchBranchQuery extends Query<List<IdName<Long>>> {
+@Service
+public class SwitchBranchQuery extends Query<List<IdName<Long>>, NoParam> {
 
-    public SwitchBranchQuery() {
-        super();
+
+    @Override
+    protected List<IdName<Long>> getData(NoParam param) {
         WebSession webSession = getToken(WebSession.class);
-        setData(getIdNames(webSession.getUserId()));
-    }
-
-    private List<IdName<Long>> getIdNames(Long id) {
-        UserQueryView userQueryView = new UserQueryView(id);
+        UserMulView userQueryView = new UserMulView(webSession.getUserId());
         return userQueryView.listBranch();
     }
 
     @Override
-    protected List<FunctionId> getFunctionId() {
+    protected List<FunctionId> getFunction() {
         return Lists.newArrayList(FunctionDef.GUEST_VISIT);
     }
 }

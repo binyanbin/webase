@@ -4,8 +4,8 @@ import com.bin.api.operate.domain.db.BranchLogDo;
 
 import com.bin.webase.core.context.IBranchLog;
 import com.bin.webase.core.entity.DbDomain;
-import com.bin.webase.core.operate.IParam;
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.IParam;
+import com.bin.webase.core.model.OperateId;
 import org.springframework.stereotype.Service;
 
 @Service
