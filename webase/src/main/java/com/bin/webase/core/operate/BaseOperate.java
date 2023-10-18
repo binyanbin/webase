@@ -4,12 +4,15 @@ import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.IBranchLog;
 import com.bin.webase.core.entity.CacheDomain;
 import com.bin.webase.core.entity.DbDomain;
+import com.bin.webase.core.model.FunctionObject;
+import com.bin.webase.core.model.IParam;
+import com.bin.webase.core.model.OperateId;
 import com.bin.webase.core.unitwork.Runner;
 
 /**
  * 执行容器
  */
-class BaseOperate {
+class BaseOperate extends FunctionObject {
     public void save(DbDomain domain) {
         UnitWorkUtils.save(domain);
     }

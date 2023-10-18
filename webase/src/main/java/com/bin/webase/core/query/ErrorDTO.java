@@ -1,13 +1,13 @@
 package com.bin.webase.core.query;
 
-public class ErrorQuery extends NoResult {
+public class ErrorDTO extends NoResult {
 
     private String msg;
 
-    public ErrorQuery() {
+    public ErrorDTO() {
     }
 
-    public ErrorQuery(Integer code, String msg) {
+    public ErrorDTO(Integer code, String msg) {
         super(code);
         this.msg = msg;
     }

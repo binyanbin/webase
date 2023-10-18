@@ -1,7 +1,6 @@
-package com.bin.webase.core.operate;
+package com.bin.webase.core.model;
 
 import com.bin.webase.core.context.WeContext;
-import com.bin.webase.core.model.IdName;
 
 import java.util.ArrayList;
 import java.util.HashMap;

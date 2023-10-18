@@ -1,6 +1,6 @@
 package com.bin.webase.core.query;
 
-public class TestException extends ErrorQuery {
+public class TestExceptionDTO extends ErrorDTO {
     private String stack;
 
     public String getStack() {

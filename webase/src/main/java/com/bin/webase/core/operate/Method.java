@@ -6,6 +6,8 @@ import com.bin.webase.core.context.IBranchLog;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.statemachine.BizStateMachine;
 import com.bin.webase.core.entity.statemachine.IState;
+import com.bin.webase.core.model.IParam;
+import com.bin.webase.core.model.OperateId;
 
 import java.util.Date;
 

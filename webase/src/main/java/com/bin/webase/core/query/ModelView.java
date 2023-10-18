@@ -2,11 +2,11 @@ package com.bin.webase.core.query;
 
 import com.bin.webase.core.context.IRepository;
 
-public abstract class View<T> {
+public abstract class ModelView<T> {
 
     protected T root;
 
-    public View() {
+    public ModelView() {
     }
 
     public T getRoot() {
@@ -17,11 +17,11 @@ public abstract class View<T> {
         return root == null;
     }
 
-    public View(Long id, IRepository<T> repository) {
+    public ModelView(Long id, IRepository<T> repository) {
         this.root = repository.getModel(id);
     }
 
-    public View(T root) {
+    public ModelView(T root) {
         this.root = root;
     }
 }

@@ -1,6 +1,6 @@
 package com.bin.webase.core.entity.statemachine;
 
-import com.bin.webase.core.operate.OperateId;
+import com.bin.webase.core.model.OperateId;
 
 import java.util.ArrayList;
 import java.util.List;

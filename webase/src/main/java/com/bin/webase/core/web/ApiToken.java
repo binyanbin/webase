@@ -1,6 +1,6 @@
 package com.bin.webase.core.web;
 
-import com.bin.webase.core.entity.FunctionId;
+import com.bin.webase.core.model.FunctionId;
 import com.bin.webase.core.entity.UniqueId;
 
 import java.util.Set;

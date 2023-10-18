@@ -1,7 +1,6 @@
-package com.bin.webase.core.entity;
+package com.bin.webase.core.model;
 
 import com.bin.webase.core.context.WeContext;
-import com.bin.webase.core.model.IdName;
 import com.bin.webase.core.web.ApiToken;
 
 import java.util.*;

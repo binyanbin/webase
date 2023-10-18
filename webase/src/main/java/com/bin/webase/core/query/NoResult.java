@@ -1,7 +1,6 @@
 package com.bin.webase.core.query;
 
 
-
 import java.io.Serializable;
 
 /**
@@ -10,8 +9,8 @@ import java.io.Serializable;
 public class NoResult implements Serializable {
     private Integer code;
 
-    NoResult(){
-
+    NoResult() {
+        this.code = 0;
     }
 
     NoResult(Integer code) {
