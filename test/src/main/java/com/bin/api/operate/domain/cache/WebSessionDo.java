@@ -1,11 +1,17 @@
 package com.bin.api.operate.domain.cache;
 
 import com.alibaba.fastjson.JSON;
+import com.bin.api.dao.mybatis.model.GuestBranch;
+import com.bin.api.dao.mybatis.model.Session;
+import com.bin.api.operate.domain.db.GuestBranchDo;
+import com.bin.api.operate.domain.db.SessionDo;
 import com.bin.webase.core.entity.CacheDomain;
 import com.bin.webase.core.web.ApiToken;
 import org.apache.commons.lang3.time.DateUtils;
+import org.assertj.core.util.Lists;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -89,5 +95,23 @@ public class WebSessionDo extends CacheDomain<WebSession> {
 
     public ApiToken toRestfulToken() {
         return new ApiToken(getUniqueId(), getSecretKey(), model.getFunctionIds(), model.getExpirationTime());
+    }
+
+    public List<SessionDo> listSession() {
+        List<Session> sessions = SessionDo.REPOSITORY.listByUserId(this.getUserId(), this.getClientType());
+        List<SessionDo> result = Lists.newArrayList();
+        for (Session session : sessions) {
+            result.add(new SessionDo(session));
+        }
+        return result;
+    }
+
+    public List<GuestBranchDo> listGuestBranch() {
+        List<GuestBranch> guestBranches = GuestBranchDo.REPOSITORY.listByGuestId(this.getUserId());
+        List<GuestBranchDo> result = Lists.newArrayList();
+        for (GuestBranch guestBranch : guestBranches) {
+            result.add(new GuestBranchDo(guestBranch));
+        }
+        return result;
     }
 }

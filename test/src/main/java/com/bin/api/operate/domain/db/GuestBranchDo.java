@@ -5,10 +5,11 @@ import com.bin.api.dao.repository.GuestBranchRepository;
 import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
+import com.bin.webase.core.entity.IBranch;
 
 import java.util.Date;
 
-public class GuestBranchDo extends DbDomain<GuestBranch> {
+public class GuestBranchDo extends DbDomain<GuestBranch> implements IBranch {
 
     public static GuestBranchRepository REPOSITORY = WeContext.getRepository(GuestBranchRepository.class);
 
@@ -41,5 +42,10 @@ public class GuestBranchDo extends DbDomain<GuestBranch> {
     @Override
     public void setId(Long id) {
         model.setId(id);
+    }
+
+    @Override
+    public Long getBranchId() {
+        return model.getBranchId();
     }
 }

@@ -5,7 +5,6 @@ import com.bin.api.operate.domain.cache.ActiveEmployee;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.base.*;
 import com.bin.api.operate.guest.BindGuestOp;
-import com.bin.api.operate.guest.ScanBranchOp;
 
 import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.operate.Result;
