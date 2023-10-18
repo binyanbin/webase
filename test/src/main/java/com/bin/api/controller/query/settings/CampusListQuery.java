@@ -4,6 +4,7 @@ import com.bin.api.controller.query.settings.vo.CampusVo;
 import com.bin.api.dao.mybatis.model.Campus;
 import com.bin.api.dao.repository.view.BranchView;
 import com.bin.api.operate.domain.cache.WebSession;
+import com.bin.api.web.base.FunctionDef;
 import com.bin.webase.core.model.FunctionId;
 import com.bin.webase.core.model.NoParam;
 import com.bin.webase.core.query.Query;
@@ -18,7 +19,7 @@ public class CampusListQuery extends Query<List<CampusVo>, NoParam> {
 
     @Override
     protected List<FunctionId> getFunction() {
-        return Lists.newArrayList(FunctionId.ERROR_FUNCTION);
+        return Lists.newArrayList(FunctionDef.CAMPUS_MANAGE);
     }
 
     @Override

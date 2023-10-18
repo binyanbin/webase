@@ -77,7 +77,7 @@ public class BiSettingTest extends BaseTest {
         Assert.assertTrue(WeContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
 
         Assert.assertTrue(WeContext.getBean(DeleteCampusOp.class).execute(idListParam).isSuccess());
-        Assert.assertTrue(WeContext.getBean(CampusListQuery.class).execute().size() > 0);
+        Assert.assertTrue(WeContext.getBean(CampusListQuery.class).execute().size() == 0);
     }
 
     @Test

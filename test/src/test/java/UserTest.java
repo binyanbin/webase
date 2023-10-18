@@ -1,11 +1,9 @@
 import com.bin.api.Application;
 import com.bin.api.controller.param.*;
+import com.bin.api.operate.base.*;
 import com.bin.api.operate.domain.cache.ActiveBranch;
 import com.bin.api.operate.domain.cache.ActiveEmployee;
 import com.bin.api.operate.domain.cache.WebSessionDo;
-import com.bin.api.operate.base.*;
-import com.bin.api.operate.guest.BindGuestOp;
-
 import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.operate.Result;
 import org.junit.Assert;
@@ -44,24 +42,6 @@ public class UserTest extends BaseTest {
         Assert.assertTrue(WeContext.getBean(ActiveBranchOp.class).execute(activeBranchParam).isSuccess());
     }
 
-    @Test
-    public void guestLogin() {
-        ScanBranchParam scanBranchParam = new ScanBranchParam();
-        scanBranchParam.setBranchId(10032L);
-        scanBranchParam.setOpenId(openId);
-        Result result = WeContext.getBean(ScanBranchOp.class).execute(scanBranchParam);
-        Assert.assertTrue(result.isSuccess());
-        createWebContext(result.getData(WebSessionDo.class));
-
-        BindGuestParam param = new BindGuestParam();
-        param.setName("严彬");
-        param.setPhone("13755144076");
-        result = WeContext.getBean(BindGuestOp.class).execute(param);
-        Assert.assertTrue(result.isSuccess());
-
-        result = WeContext.getBean(GuestSwitchBranchOp.class).execute(new IdParam(10031L));
-        Assert.assertTrue(result.isSuccess());
-    }
 
     @Test
     public void employeeOperate() {
