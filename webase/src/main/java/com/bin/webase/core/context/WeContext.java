@@ -1,6 +1,7 @@
 package com.bin.webase.core.context;
 
 
+import com.bin.webase.core.web.DisposeApiRequest;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -104,6 +105,11 @@ public class WeContext {
         IBranchLog branchLog = sc.getBean(IBranchLog.class);
         if (branchLog != null) {
             WeContext.branchLog = branchLog;
+        }
+
+        DisposeApiRequest disposeApiRequest = sc.getBean(DisposeApiRequest.class);
+        if (disposeApiRequest == null) {
+            throw new Exception("未实例DisposeApiRequest");
         }
 
 

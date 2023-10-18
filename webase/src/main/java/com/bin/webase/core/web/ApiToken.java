@@ -9,18 +9,16 @@ public class ApiToken implements UniqueId {
     private String uniqueId;
     private String secretKey;
     private Long expirationTime;
-    private Integer clientType;
     private Set<Integer> functionIds;
 
 
     public ApiToken() {
     }
 
-    public ApiToken(String uniqueId, String secretKey, Set<Integer> functionIds, Long expirationTime, Integer clientType) {
+    public ApiToken(String uniqueId, String secretKey, Set<Integer> functionIds, Long expirationTime) {
         this.uniqueId = uniqueId;
         this.secretKey = secretKey;
         this.expirationTime = expirationTime;
-        this.clientType = clientType;
         this.functionIds = functionIds;
     }
 
@@ -32,9 +30,6 @@ public class ApiToken implements UniqueId {
         return expirationTime;
     }
 
-    public Integer getClientType() {
-        return clientType;
-    }
 
     public Set<Integer> getFunctionIds() {
         return functionIds;

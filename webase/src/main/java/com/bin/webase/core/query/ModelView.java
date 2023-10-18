@@ -4,24 +4,24 @@ import com.bin.webase.core.context.IRepository;
 
 public abstract class ModelView<T> {
 
-    protected T root;
+    protected T model;
 
     public ModelView() {
     }
 
-    public T getRoot() {
-        return root;
+    public T getModel() {
+        return model;
     }
 
     public boolean isRootNull() {
-        return root == null;
+        return model == null;
     }
 
     public ModelView(Long id, IRepository<T> repository) {
-        this.root = repository.getModel(id);
+        this.model = repository.getModel(id);
     }
 
-    public ModelView(T root) {
-        this.root = root;
+    public ModelView(T model) {
+        this.model = model;
     }
 }

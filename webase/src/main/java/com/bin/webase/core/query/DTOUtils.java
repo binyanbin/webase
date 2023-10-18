@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class DTOUtils {
-    public static NoResult success() {
-        return new NoResult(0);
+    public static NoResultDTO success() {
+        return new NoResultDTO(0);
     }
 
     public static DTO<Boolean> success(boolean result) {

@@ -1,6 +1,6 @@
 package com.bin.webase.core.query;
 
-public class ErrorDTO extends NoResult {
+public class ErrorDTO extends NoResultDTO {
 
     private String msg;
 

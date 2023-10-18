@@ -1,6 +1,6 @@
 package com.bin.webase.core.query;
 
-public class DTO<T> extends NoResult {
+public class DTO<T> extends NoResultDTO {
 
     private T data;
 

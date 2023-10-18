@@ -6,14 +6,14 @@ import java.io.Serializable;
 /**
  * 无结果返回
  */
-public class NoResult implements Serializable {
+public class NoResultDTO implements Serializable {
     private Integer code;
 
-    NoResult() {
+    NoResultDTO() {
         this.code = 0;
     }
 
-    NoResult(Integer code) {
+    NoResultDTO(Integer code) {
         this.code = code;
     }
 
