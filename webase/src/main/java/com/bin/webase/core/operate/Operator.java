@@ -1,7 +1,7 @@
 package com.bin.webase.core.operate;
 
 
-import com.bin.webase.core.context.IBranchLog;
+import com.bin.webase.core.context.IOperateLog;
 import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
@@ -63,11 +63,11 @@ public abstract class Operator<C extends IParam> extends BaseOperate {
     }
 
     protected void saveBranchLog(DbDomain domain, IParam param, String msg) {
-        IBranchLog branchLog = WeContext.getBranchLog();
-        if (branchLog == null) {
+        IOperateLog operateLog = WeContext.getOperateLog();
+        if (operateLog == null) {
             throw new ApplicationException(ErrorCode.NullPointerException, "日志接口未实现");
         }
-        WeContext.getBranchLog().newBranchLog(getCommandId(), domain, param, msg);
+        WeContext.getOperateLog().log(getCommandId(), domain, param, msg);
     }
 
 }

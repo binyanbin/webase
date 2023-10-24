@@ -2,6 +2,7 @@ package com.bin.webase.core.context;
 
 
 import com.bin.webase.core.web.DisposeApiRequest;
+import com.bin.webase.core.web.WebContext;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -16,7 +17,8 @@ public class WeContext {
     private final static Map<String, IRepository> repositories = new HashMap<>();
     private static ISequence sequence;
     private static ICacheRepository cache;
-    private static IBranchLog branchLog;
+    private static IOperateLog operateLog;
+    private static IQueryLog queryLog;
     private static IContext springContext;
     private static StringBuilder errorMsg;
 
@@ -50,12 +52,12 @@ public class WeContext {
         return cache;
     }
 
-    public static IBranchLog getBranchLog() {
-        return branchLog;
+    public static IOperateLog getOperateLog() {
+        return operateLog;
     }
 
-    public static void setBranchLog(IBranchLog myBranchLog) {
-        branchLog = myBranchLog;
+    public static IQueryLog getQueryLog() {
+        return queryLog;
     }
 
     public static Object getContainBean(Class<?> c) throws IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -102,9 +104,14 @@ public class WeContext {
             WeContext.cache = cache;
         }
 
-        IBranchLog branchLog = sc.getBean(IBranchLog.class);
-        if (branchLog != null) {
-            WeContext.branchLog = branchLog;
+        IOperateLog operateLog = sc.getBean(IOperateLog.class);
+        if (operateLog != null) {
+            WeContext.operateLog = operateLog;
+        }
+
+        IQueryLog queryLog = sc.getBean(IQueryLog.class);
+        if (queryLog != null) {
+            WeContext.queryLog = queryLog;
         }
 
         DisposeApiRequest disposeApiRequest = sc.getBean(DisposeApiRequest.class);
