@@ -44,4 +44,9 @@ public class EmployeeFunctionDo extends DbDomain<EmployeeFunction> implements IB
     public Long getBranchId() {
         return model.getBranchId();
     }
+
+    @Override
+    public boolean branchCache() {
+        return false;
+    }
 }

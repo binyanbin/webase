@@ -65,6 +65,11 @@ public class GuestDo extends DbDomain<Guest> implements IBranch {
         return model.getBranchId();
     }
 
+    @Override
+    public boolean branchCache() {
+        return false;
+    }
+
     public void setBranchId(Long branchId) {
         model.setBranchId(branchId);
     }

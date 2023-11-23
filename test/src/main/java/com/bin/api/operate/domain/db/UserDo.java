@@ -7,8 +7,8 @@ import com.bin.api.dao.mybatis.model.Session;
 import com.bin.api.dao.mybatis.model.User;
 import com.bin.api.dao.repository.UserRepository;
 import com.bin.api.utils.Sha256;
-import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.IRepository;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
 import com.google.common.collect.Lists;
@@ -103,5 +103,10 @@ public class UserDo extends DbDomain<User> implements IBranch {
     @Override
     public Long getBranchId() {
         return model.getBranchId();
+    }
+
+    @Override
+    public boolean branchCache() {
+        return false;
     }
 }

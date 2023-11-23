@@ -48,4 +48,9 @@ public class GuestBranchDo extends DbDomain<GuestBranch> implements IBranch {
     public Long getBranchId() {
         return model.getBranchId();
     }
+
+    @Override
+    public boolean branchCache() {
+        return false;
+    }
 }

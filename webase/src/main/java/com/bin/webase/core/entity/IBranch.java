@@ -4,5 +4,5 @@ public interface IBranch {
 
     Long getBranchId();
 
-    boolean getBranchCache();
+    boolean branchCache();
 }

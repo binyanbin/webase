@@ -48,6 +48,11 @@ public class EmployeeDo extends DbDomain<Employee> implements IBranch {
         return model.getBranchId();
     }
 
+    @Override
+    public boolean branchCache() {
+        return false;
+    }
+
     public Long getUserId() {
         return model.getUserId();
     }

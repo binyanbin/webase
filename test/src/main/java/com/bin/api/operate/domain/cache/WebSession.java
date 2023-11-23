@@ -35,6 +35,11 @@ public class WebSession extends ApiToken implements UniqueId, IBranch {
         return branchId;
     }
 
+    @Override
+    public boolean branchCache() {
+        return false;
+    }
+
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
     }
