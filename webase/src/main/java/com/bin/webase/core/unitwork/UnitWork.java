@@ -2,6 +2,7 @@ package com.bin.webase.core.unitwork;
 
 
 import com.alibaba.fastjson.JSON;
+import com.bin.webase.core.context.CacheDbRepository;
 import com.bin.webase.core.context.ICacheRepository;
 import com.bin.webase.core.context.ISequence;
 import com.bin.webase.core.context.WeContext;
@@ -18,7 +19,6 @@ import java.util.Map;
 public class UnitWork {
     private static final ThreadLocal<Context> context = new ThreadLocal<>();
     private final ISequence sequence;
-    public final static String CACHE_PREFIX = "db_";
 
     public UnitWork(ISequence sequence) {
         this.sequence = sequence;
@@ -43,11 +43,11 @@ public class UnitWork {
             context.saveObject(domain, DbType.delete);
         }
         if (domain instanceof IDbCache) {
-            String key = CACHE_PREFIX + domain.getClass().getTypeName() + domain.getId();
+            String key = CacheDbRepository.PREFIX + domain.getModel().getClass().getTypeName() + domain.getId();
             any(() -> WeContext.getCacheBean().delete(key));
         }
         if (domain instanceof IBranch) {
-            String key = CACHE_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
+            String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
             any(() -> WeContext.getCacheBean().delete(key));
         }
     }
@@ -67,11 +67,11 @@ public class UnitWork {
         }
         if (domain instanceof IDbCache) {
             IDbCache cache = (IDbCache) domain;
-            String key = CACHE_PREFIX + domain.getClass().getTypeName() + domain.getId();
+            String key = CacheDbRepository.PREFIX + domain.getModel().getClass().getTypeName() + domain.getId();
             any(() -> WeContext.getCacheBean().set(key, JSON.toJSONString(domain.getModel()), cache.getCacheSecond()));
         }
         if (domain instanceof IBranch) {
-            String key = CACHE_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
+            String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
             any(() -> WeContext.getCacheBean().delete(key));
         }
     }

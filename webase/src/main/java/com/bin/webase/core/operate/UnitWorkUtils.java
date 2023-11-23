@@ -7,7 +7,6 @@ import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.unitwork.DbObject;
 import com.bin.webase.core.unitwork.DbType;
 import com.bin.webase.core.unitwork.Runner;
-import com.bin.webase.core.unitwork.UnitWork;
 
 import java.util.List;
 import java.util.function.Function;
@@ -17,20 +16,18 @@ import java.util.function.Function;
  */
 public class UnitWorkUtils {
 
-    private static final UnitWork UNIT_WORK = new UnitWork(WeContext.getSequenceBean());
-
     public static <T extends DbDomain> T getDbObject(String uniqueId) {
-        return UNIT_WORK.getDbDomain(uniqueId);
+        return WeContext.getUnitWork().getDbDomain(uniqueId);
     }
 
     public static <T extends CacheDomain> T getDomain(String uniqueId) {
-        return UNIT_WORK.getBaseDomain(uniqueId);
+        return WeContext.getUnitWork().getBaseDomain(uniqueId);
     }
 
     public static <T> List<T> updateListByCache(List<T> list, Function<T, Long> function) {
         for (int i = 0; i < list.size(); i++) {
             T t = list.get(i);
-            DbObject dbObject = UNIT_WORK.getDbObject(DbDomain.getUniqueId(t.getClass(), function.apply(t)));
+            DbObject dbObject = WeContext.getUnitWork().getDbObject(DbDomain.getUniqueId(t.getClass(), function.apply(t)));
             if (dbObject != null) {
                 if (dbObject.getDbType().equals(DbType.update)) {
                     DbDomain domain = dbObject.getDbDomain();
@@ -49,37 +46,37 @@ public class UnitWorkUtils {
         if (domain == null || domain.isNull()) {
             throw new NullPointerException();
         }
-        UNIT_WORK.save(domain);
+        WeContext.getUnitWork().save(domain);
     }
 
     static void save(CacheDomain domain) {
         if (domain == null || domain.isNull()) {
             throw new NullPointerException();
         }
-        UNIT_WORK.save(domain);
+        WeContext.getUnitWork().save(domain);
     }
 
     static void remove(CacheDomain domain) {
         if (domain != null && !domain.isNull()) {
-            UNIT_WORK.remove(domain);
+            WeContext.getUnitWork().remove(domain);
         }
     }
 
     static void remove(DbDomain domain) {
         if (domain != null && !domain.isNull()) {
-            UNIT_WORK.remove(domain);
+            WeContext.getUnitWork().remove(domain);
         }
     }
 
     static void any(Runner runner) {
-        UNIT_WORK.any(runner);
+        WeContext.getUnitWork().any(runner);
     }
 
     static void after(Runner runner) {
-        UNIT_WORK.saveAfterRun(runner);
+        WeContext.getUnitWork().saveAfterRun(runner);
     }
 
     static void commit() {
-        UNIT_WORK.commit();
+        WeContext.getUnitWork().commit();
     }
 }

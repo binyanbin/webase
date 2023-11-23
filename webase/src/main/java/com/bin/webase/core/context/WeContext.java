@@ -1,8 +1,8 @@
 package com.bin.webase.core.context;
 
 
+import com.bin.webase.core.unitwork.UnitWork;
 import com.bin.webase.core.web.DisposeApiRequest;
-import com.bin.webase.core.web.WebContext;
 import com.bin.webase.exception.ErrorCheck;
 import org.reflections.Reflections;
 
@@ -18,6 +18,7 @@ public class WeContext {
     private static ISequence sequence;
     private static ICacheRepository cache;
     private static IOperateLog operateLog;
+    private static UnitWork unitWork;
     private static IQueryLog queryLog;
     private static IContext springContext;
     private static StringBuilder errorMsg;
@@ -43,6 +44,9 @@ public class WeContext {
         return springContext.getBean(clazz);
     }
 
+    public static UnitWork getUnitWork() {
+        return unitWork;
+    }
 
     public static ISequence getSequenceBean() {
         return sequence;
@@ -98,7 +102,7 @@ public class WeContext {
         if (sequence != null) {
             WeContext.sequence = sequence;
         }
-
+        WeContext.unitWork = new UnitWork(sequence);
         ICacheRepository cache = sc.getBean(ICacheRepository.class);
         if (cache != null) {
             WeContext.cache = cache;

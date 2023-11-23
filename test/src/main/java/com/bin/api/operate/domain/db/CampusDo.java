@@ -2,19 +2,21 @@ package com.bin.api.operate.domain.db;
 
 import com.bin.api.controller.param.CampusParam;
 import com.bin.api.dao.mybatis.model.Campus;
-import com.bin.api.dao.repository.CampusRepository;
+import com.bin.api.dao.repository.CampusDbRepository;
 import com.bin.api.web.base.OperateDef;
-import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.context.IRepository;
+import com.bin.webase.core.context.WeContext;
 import com.bin.webase.core.entity.DbDomain;
+import com.bin.webase.core.entity.IDbCache;
 import com.bin.webase.core.entity.statemachine.IState;
 import com.bin.webase.core.entity.statemachine.IStateMachine;
 import com.bin.webase.core.entity.statemachine.NormalStateMachine;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-public class CampusDo extends DbDomain<Campus> implements IState {
-    public static CampusRepository REPOSITORY = WeContext.getRepository(CampusRepository.class);
+public class CampusDo extends DbDomain<Campus> implements IState, IDbCache {
+    public static CampusDbRepository REPOSITORY = WeContext.getRepository(CampusDbRepository.class);
     public static final IStateMachine STATE_MACHINE = new NormalStateMachine(OperateDef.ADD_CAMPUS, OperateDef.UPDATE_CAMPUS,
             OperateDef.DELETE_CAMPUS, OperateDef.DISABLE_CAMPUS);
 
@@ -52,7 +54,7 @@ public class CampusDo extends DbDomain<Campus> implements IState {
         campus.setUpdatedTime(now);
         campus.setName(param.getName());
         campus.setAddress(param.getAddress());
-        return  new CampusDo(campus);
+        return new CampusDo(campus);
     }
 
 
@@ -79,5 +81,10 @@ public class CampusDo extends DbDomain<Campus> implements IState {
     @Override
     public IStateMachine getStateMachine() {
         return STATE_MACHINE;
+    }
+
+    @Override
+    public int getCacheSecond() {
+        return (int) TimeUnit.DAYS.toSeconds(1);
     }
 }

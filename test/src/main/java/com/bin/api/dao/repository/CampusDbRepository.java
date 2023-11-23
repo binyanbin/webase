@@ -4,8 +4,8 @@ import com.bin.api.dao.mybatis.base.CampusMapper;
 import com.bin.api.dao.mybatis.model.Campus;
 import com.bin.api.dao.mybatis.model.CampusExample;
 import com.bin.api.dao.repository.mapper.CommonSqlService;
+import com.bin.webase.core.context.CacheDbRepository;
 import com.bin.webase.core.context.DoRepository;
-import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.statemachine.NormalStateMachine;
 import org.assertj.core.util.Lists;
 import org.springframework.util.CollectionUtils;
@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @DoRepository
-public class CampusRepository implements IRepository<Campus> {
+public class CampusDbRepository extends CacheDbRepository<Campus> {
     private static final String TABLE_NAME = "bi_campus";
     private final CampusMapper campusMapper;
     private final CommonSqlService commonMapper;
@@ -24,6 +24,7 @@ public class CampusRepository implements IRepository<Campus> {
         return campusMapper.selectByExample(example);
     }
 
+    @Override
     public List<Campus> listByBranchId(Long branchId) {
         CampusExample example = new CampusExample();
         example.createCriteria().andBranchIdEqualTo(branchId).andStatusIdIn(NormalStateMachine.noDelete());
@@ -31,7 +32,7 @@ public class CampusRepository implements IRepository<Campus> {
     }
 
     public List<Campus> listByIds(List<Long> ids) {
-        if (CollectionUtils.isEmpty(ids)){
+        if (CollectionUtils.isEmpty(ids)) {
             return Lists.newArrayList();
         }
         CampusExample example = new CampusExample();
@@ -39,7 +40,7 @@ public class CampusRepository implements IRepository<Campus> {
         return campusMapper.selectByExample(example);
     }
 
-    public CampusRepository(CampusMapper campusMapper, CommonSqlService commonMapper) {
+    public CampusDbRepository(CampusMapper campusMapper, CommonSqlService commonMapper) {
         this.campusMapper = campusMapper;
         this.commonMapper = commonMapper;
     }
