@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @DoRepository
-public class CampusDbRepository extends CacheDbRepository<Campus> {
+public class CampusRepository extends CacheDbRepository<Campus> {
     private static final String TABLE_NAME = "bi_campus";
     private final CampusMapper campusMapper;
     private final CommonSqlService commonMapper;
@@ -40,7 +40,7 @@ public class CampusDbRepository extends CacheDbRepository<Campus> {
         return campusMapper.selectByExample(example);
     }
 
-    public CampusDbRepository(CampusMapper campusMapper, CommonSqlService commonMapper) {
+    public CampusRepository(CampusMapper campusMapper, CommonSqlService commonMapper) {
         this.campusMapper = campusMapper;
         this.commonMapper = commonMapper;
     }

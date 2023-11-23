@@ -2,7 +2,7 @@ package com.bin.api.operate.domain.db;
 
 import com.bin.api.controller.param.CampusParam;
 import com.bin.api.dao.mybatis.model.Campus;
-import com.bin.api.dao.repository.CampusDbRepository;
+import com.bin.api.dao.repository.CampusRepository;
 import com.bin.api.web.base.OperateDef;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.context.WeContext;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class CampusDo extends DbDomain<Campus> implements IState, IDbCache {
-    public static CampusDbRepository REPOSITORY = WeContext.getRepository(CampusDbRepository.class);
+    public static CampusRepository REPOSITORY = WeContext.getRepository(CampusRepository.class);
     public static final IStateMachine STATE_MACHINE = new NormalStateMachine(OperateDef.ADD_CAMPUS, OperateDef.UPDATE_CAMPUS,
             OperateDef.DELETE_CAMPUS, OperateDef.DISABLE_CAMPUS);
 

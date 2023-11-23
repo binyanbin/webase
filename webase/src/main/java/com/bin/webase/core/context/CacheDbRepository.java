@@ -21,12 +21,17 @@ public abstract class CacheDbRepository<T> implements IRepository<T>, IBranchRep
         return result;
     }
 
-    public T getCacheModel(Long id, Class<T> clazz) {
+    public T getCmodel(Long id, Class<T> clazz) {
         String key = PREFIX + clazz.getTypeName() + id;
         if (WeContext.getCacheBean().hasKey(key)) {
             String json = WeContext.getCacheBean().get(key);
             return JSON.parseObject(json, clazz);
         } else {
+            T result = getModel(id);
+            if (result != null) {
+                WeContext.getCacheBean().set(key, JSON.toJSONString(result));
+                return result;
+            }
             return null;
         }
     }

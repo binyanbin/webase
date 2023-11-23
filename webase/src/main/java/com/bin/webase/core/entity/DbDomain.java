@@ -1,8 +1,11 @@
 package com.bin.webase.core.entity;
 
 
-import com.bin.webase.core.operate.UnitWorkUtils;
+import com.alibaba.fastjson.JSON;
+import com.bin.webase.core.context.CacheDbRepository;
 import com.bin.webase.core.context.IRepository;
+import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.operate.UnitWorkUtils;
 
 import java.lang.reflect.*;
 
@@ -22,7 +25,17 @@ public abstract class DbDomain<T> implements UniqueId {
             model = (T) domain.getModel();
         }
         if (model == null) {
-            this.model = getRepository().getModel(id);
+            IRepository<T> repository = getRepository();
+            if (repository instanceof CacheDbRepository) {
+                String json = WeContext.getCacheBean().get(CacheDbRepository.PREFIX + uniqueId);
+                if (json != null && json.length() > 0) {
+                    model = JSON.parseObject(json, type);
+                } else {
+                    model = repository.getModel(id);
+                }
+            } else {
+                model = repository.getModel(id);
+            }
         }
     }
 

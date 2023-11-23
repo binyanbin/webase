@@ -28,11 +28,13 @@ public class BaseTest {
 
     @Test
     public void test() {
-        CampusDo campusDo = new CampusDo(10020L);
-        WeContext.getUnitWork().remove(campusDo);
-        WeContext.getUnitWork().commit();
-        List<Campus> result = CampusDo.REPOSITORY.listCacheByBranchId(10045L, Campus.class);
-        ;
+//        CampusDo campusDo = new CampusDo(10020L);
+//        WeContext.getUnitWork().remove(campusDo);
+//        WeContext.getUnitWork().commit();
+//        List<Campus> result = CampusDo.REPOSITORY.listCacheByBranchId(10045L, Campus.class);
+//        ;
+        Campus campus = CampusDo.REPOSITORY.getCmodel(10019L,Campus.class);
+        CampusDo campusDo = new CampusDo(10019L);
     }
 
 
