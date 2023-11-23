@@ -47,8 +47,11 @@ public class UnitWork {
             any(() -> WeContext.getCacheBean().delete(key));
         }
         if (domain instanceof IBranch) {
-            String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
-            any(() -> WeContext.getCacheBean().delete(key));
+            IBranch iBranch = (IBranch) domain;
+            if (iBranch.branchCache()) {
+                String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + iBranch.getBranchId();
+                any(() -> WeContext.getCacheBean().delete(key));
+            }
         }
     }
 
@@ -71,8 +74,11 @@ public class UnitWork {
             any(() -> WeContext.getCacheBean().set(key, JSON.toJSONString(domain.getModel()), cache.getCacheSecond()));
         }
         if (domain instanceof IBranch) {
-            String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
-            any(() -> WeContext.getCacheBean().delete(key));
+            IBranch iBranch = (IBranch) domain;
+            if (iBranch.branchCache()) {
+                String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + iBranch.getBranchId();
+                any(() -> WeContext.getCacheBean().delete(key));
+            }
         }
     }
 
@@ -122,7 +128,6 @@ public class UnitWork {
         ICacheRepository cache = WeContext.getCacheBean();
         for (DomainObject domainObject : domains) {
             CacheDomain domain = domainObject.getDomain();
-            ;
             if (domainObject.getType() == DomainType.save) {
                 cache.set(domain.getUniqueId(), domain.toJson());
             } else if (domainObject.getType() == DomainType.remove) {
