@@ -1,12 +1,11 @@
 package com.bin.webase.core.unitwork;
 
 
-import com.bin.webase.core.context.WeContext;
+import com.alibaba.fastjson.JSON;
 import com.bin.webase.core.context.ICacheRepository;
 import com.bin.webase.core.context.ISequence;
-import com.bin.webase.core.entity.CacheDomain;
-import com.bin.webase.core.entity.DbDomain;
-import com.bin.webase.core.entity.UniqueId;
+import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.entity.*;
 import com.bin.webase.exception.ErrorCheck;
 
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.Map;
 public class UnitWork {
     private static final ThreadLocal<Context> context = new ThreadLocal<>();
     private final ISequence sequence;
+    public final static String CACHE_PREFIX = "db_";
 
     public UnitWork(ISequence sequence) {
         this.sequence = sequence;
@@ -42,6 +42,14 @@ public class UnitWork {
         } else {
             context.saveObject(domain, DbType.delete);
         }
+        if (domain instanceof IDbCache) {
+            String key = CACHE_PREFIX + domain.getClass().getTypeName() + domain.getId();
+            any(() -> WeContext.getCacheBean().delete(key));
+        }
+        if (domain instanceof IBranch) {
+            String key = CACHE_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
+            any(() -> WeContext.getCacheBean().delete(key));
+        }
     }
 
     public void save(DbDomain domain) {
@@ -56,6 +64,15 @@ public class UnitWork {
             } else {
                 context.saveObject(domain, DbType.update);
             }
+        }
+        if (domain instanceof IDbCache) {
+            IDbCache cache = (IDbCache) domain;
+            String key = CACHE_PREFIX + domain.getClass().getTypeName() + domain.getId();
+            any(() -> WeContext.getCacheBean().set(key, JSON.toJSONString(domain.getModel()), cache.getCacheSecond()));
+        }
+        if (domain instanceof IBranch) {
+            String key = CACHE_PREFIX + domain.getModel().getClass().getTypeName() + ((IBranch) domain).getBranchId();
+            any(() -> WeContext.getCacheBean().delete(key));
         }
     }
 
@@ -73,7 +90,7 @@ public class UnitWork {
         getContext().saveRunner(runner);
     }
 
-    public void saveAfterRun(Runner runner){
+    public void saveAfterRun(Runner runner) {
         getContext().addAfter(runner);
     }
 
@@ -104,9 +121,10 @@ public class UnitWork {
         }
         ICacheRepository cache = WeContext.getCacheBean();
         for (DomainObject domainObject : domains) {
-            CacheDomain domain = domainObject.getDomain();;
+            CacheDomain domain = domainObject.getDomain();
+            ;
             if (domainObject.getType() == DomainType.save) {
-                cache.set(domain.getUniqueId(),domain.toJson());
+                cache.set(domain.getUniqueId(), domain.toJson());
             } else if (domainObject.getType() == DomainType.remove) {
                 cache.delete(domain.getUniqueId());
             }
@@ -115,7 +133,7 @@ public class UnitWork {
             runner.run();
         }
         List<Runner> runnerList = getContext().getAfterRun();
-        for (Runner runner :runnerList){
+        for (Runner runner : runnerList) {
             runner.run();
         }
         context.remove();
