@@ -1,6 +1,6 @@
 package com.bin.webase.core.operate;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IOperateLog;
 import com.bin.webase.core.entity.CacheDomain;
 import com.bin.webase.core.entity.DbDomain;
@@ -38,23 +38,23 @@ class BaseOperate extends FunctionObject {
     }
 
     protected void saveBranchLog(OperateId operateId, String msg, IParam param, DbDomain domain) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, param, msg);
+            WebaseContext.getOperateLog().log(operateId, domain, param, msg);
         }
     }
 
     protected void saveBranchLog(OperateId operateId, DbDomain domain, IParam param) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, param, "");
+            WebaseContext.getOperateLog().log(operateId, domain, param, "");
         }
     }
 
     protected void saveBranchLog(OperateId operateId, DbDomain domain) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, null, "");
+            WebaseContext.getOperateLog().log(operateId, domain, null, "");
         }
     }
 }

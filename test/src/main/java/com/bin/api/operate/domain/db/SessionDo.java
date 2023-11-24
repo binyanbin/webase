@@ -4,7 +4,7 @@ package com.bin.api.operate.domain.db;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.dao.mybatis.model.Session;
 import com.bin.api.dao.repository.SessionRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class SessionDo extends DbDomain<Session> {
 
-    public static SessionRepository REPOSITORY = WeContext.getRepository(SessionRepository.class);
+    public static SessionRepository REPOSITORY = WebaseContext.getRepository(SessionRepository.class);
 
     public SessionDo(Session userSession) {
         super(userSession);

@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.bin.webase.core.context.CacheDbRepository;
 import com.bin.webase.core.context.ICacheRepository;
 import com.bin.webase.core.context.ISequence;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.entity.*;
 import com.bin.webase.exception.ErrorCheck;
 
@@ -44,13 +44,13 @@ public class UnitWork {
         }
         if (domain instanceof IDbCache) {
             String key = CacheDbRepository.PREFIX + domain.getModel().getClass().getTypeName() + domain.getId();
-            any(() -> WeContext.getCacheBean().delete(key));
+            any(() -> WebaseContext.getCacheBean().delete(key));
         }
         if (domain instanceof IBranch) {
             IBranch iBranch = (IBranch) domain;
             if (iBranch.branchCache()) {
                 String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + iBranch.getBranchId();
-                any(() -> WeContext.getCacheBean().delete(key));
+                any(() -> WebaseContext.getCacheBean().delete(key));
             }
         }
     }
@@ -71,13 +71,13 @@ public class UnitWork {
         if (domain instanceof IDbCache) {
             IDbCache cache = (IDbCache) domain;
             String key = CacheDbRepository.PREFIX + domain.getModel().getClass().getTypeName() + domain.getId();
-            any(() -> WeContext.getCacheBean().set(key, JSON.toJSONString(domain.getModel()), cache.getCacheSecond()));
+            any(() -> WebaseContext.getCacheBean().set(key, JSON.toJSONString(domain.getModel()), cache.getCacheSecond()));
         }
         if (domain instanceof IBranch) {
             IBranch iBranch = (IBranch) domain;
             if (iBranch.branchCache()) {
                 String key = CacheDbRepository.BRANCH_PREFIX + domain.getModel().getClass().getTypeName() + iBranch.getBranchId();
-                any(() -> WeContext.getCacheBean().delete(key));
+                any(() -> WebaseContext.getCacheBean().delete(key));
             }
         }
     }
@@ -125,7 +125,7 @@ public class UnitWork {
                 domains.add(domain);
             }
         }
-        ICacheRepository cache = WeContext.getCacheBean();
+        ICacheRepository cache = WebaseContext.getCacheBean();
         for (DomainObject domainObject : domains) {
             CacheDomain domain = domainObject.getDomain();
             if (domainObject.getType() == DomainType.save) {

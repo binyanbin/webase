@@ -1,17 +1,13 @@
-import com.bin.api.Application;
 import com.bin.api.controller.param.*;
 import com.bin.api.operate.base.*;
 import com.bin.api.operate.domain.cache.ActiveBranch;
 import com.bin.api.operate.domain.cache.ActiveEmployee;
 import com.bin.api.operate.domain.cache.WebSessionDo;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.operate.Result;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 public class UserTest extends BaseTest {
@@ -28,7 +24,7 @@ public class UserTest extends BaseTest {
         branchParam.setAddress("address");
         branchParam.setName("branchName");
         branchParam.setIntroduce("introduce");
-        Result result = WeContext.getBean(CreatedBranchOp.class).execute(branchParam);
+        Result result = WebaseContext.getBean(CreatedBranchOp.class).execute(branchParam);
         Assert.assertTrue(result.isSuccess());
         ActiveBranch activeBranch = result.getData(ActiveBranch.class);
 
@@ -38,7 +34,7 @@ public class UserTest extends BaseTest {
         activeBranchParam.setAdminOpenId(openId);
         activeBranchParam.setPhone("13755144076");
         activeBranchParam.setName("严彬");
-        Assert.assertTrue(WeContext.getBean(ActiveBranchOp.class).execute(activeBranchParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(ActiveBranchOp.class).execute(activeBranchParam).isSuccess());
     }
 
 
@@ -50,7 +46,7 @@ public class UserTest extends BaseTest {
             EmployeeParam param = new EmployeeParam();
             param.setName("系统1");
             param.setAdmin(true);
-            Result result = WeContext.getBean(AddEmployeeOp.class).execute(param);
+            Result result = WebaseContext.getBean(AddEmployeeOp.class).execute(param);
             Assert.assertTrue(result.isSuccess());
             ActiveEmployee activeEmployee = result.getData(ActiveEmployee.class);
 
@@ -60,9 +56,9 @@ public class UserTest extends BaseTest {
             activeEmployeeParam.setPhone("137111111111");
             activeEmployeeParam.setId(activeEmployee.getId());
 
-            Assert.assertTrue(WeContext.getBean(ActiveEmployeeOp.class).execute(activeEmployeeParam).isSuccess());
+            Assert.assertTrue(WebaseContext.getBean(ActiveEmployeeOp.class).execute(activeEmployeeParam).isSuccess());
         } else if (type.equals("delete")) {
-            Assert.assertTrue(WeContext.getBean(DeleteEmployeeOp.class).execute(new IdParam(10047L)).isSuccess());
+            Assert.assertTrue(WebaseContext.getBean(DeleteEmployeeOp.class).execute(new IdParam(10047L)).isSuccess());
         }
 
     }
@@ -72,7 +68,7 @@ public class UserTest extends BaseTest {
     public void loginSuccess() {
         UserLoginParam param = new UserLoginParam();
         param.setOpenId(openId);
-        Result result = WeContext.getBean(LoginOp.class).execute(param);
+        Result result = WebaseContext.getBean(LoginOp.class).execute(param);
         Assert.assertTrue(result.isSuccess());
         createWebContext(result.getData(WebSessionDo.class));
     }
@@ -81,7 +77,7 @@ public class UserTest extends BaseTest {
     public void loginFail() {
         UserLoginParam param = new UserLoginParam();
         param.setOpenId(openId + "0");
-        Assert.assertTrue(WeContext.getBean(LoginOp.class).execute(param).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(LoginOp.class).execute(param).isSuccess());
     }
 
 

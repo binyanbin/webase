@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class WeContext {
+public class WebaseContext {
 
     private final static Map<String, IRepository> repositories = new HashMap<>();
     private static ISequence sequence;
@@ -90,7 +90,7 @@ public class WeContext {
             Set<Class<?>> set = f.getTypesAnnotatedWith(DoRepository.class);
             for (Class<?> c : set) {
                 if (c.getClass().equals(IRepository.class.getClass())) {
-                    Object bean = WeContext.getContainBean(c);
+                    Object bean = WebaseContext.getContainBean(c);
                     IRepository repository = (IRepository) bean;
                     ErrorCheck.checkException(!repositories.containsKey(repository.getTableName()), "仓库有重复的表名[" + repository.getTableName() + "]");
                     repositories.put(repository.getClass().getName(), repository);
@@ -100,22 +100,22 @@ public class WeContext {
 
         ISequence sequence = sc.getBean(ISequence.class);
         if (sequence != null) {
-            WeContext.sequence = sequence;
+            WebaseContext.sequence = sequence;
         }
-        WeContext.unitWork = new UnitWork(sequence);
+        WebaseContext.unitWork = new UnitWork(sequence);
         ICacheRepository cache = sc.getBean(ICacheRepository.class);
         if (cache != null) {
-            WeContext.cache = cache;
+            WebaseContext.cache = cache;
         }
 
         IOperateLog operateLog = sc.getBean(IOperateLog.class);
         if (operateLog != null) {
-            WeContext.operateLog = operateLog;
+            WebaseContext.operateLog = operateLog;
         }
 
         IQueryLog queryLog = sc.getBean(IQueryLog.class);
         if (queryLog != null) {
-            WeContext.queryLog = queryLog;
+            WebaseContext.queryLog = queryLog;
         }
 
         DisposeApiRequest disposeApiRequest = sc.getBean(DisposeApiRequest.class);
@@ -124,10 +124,10 @@ public class WeContext {
         }
 
 
-        ErrorCheck.checkNotNullException(WeContext.sequence, "需要实现序例");
-        ErrorCheck.checkNotNullException(WeContext.cache, "需要实现缓存");
+        ErrorCheck.checkNotNullException(WebaseContext.sequence, "需要实现序例");
+        ErrorCheck.checkNotNullException(WebaseContext.cache, "需要实现缓存");
         for (Map.Entry<String, IRepository> entry : repositories.entrySet()) {
-            WeContext.getSequenceBean().init(entry.getValue());
+            WebaseContext.getSequenceBean().init(entry.getValue());
         }
     }
 }

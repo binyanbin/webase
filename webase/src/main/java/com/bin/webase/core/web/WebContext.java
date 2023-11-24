@@ -1,7 +1,7 @@
 package com.bin.webase.core.web;
 
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class WebContext {
 
     public Long getStreamId() {
         if (streamId == null) {
-            streamId = WeContext.getSequenceBean().newKey(this.getClass());
+            streamId = WebaseContext.getSequenceBean().newKey(this.getClass());
         }
         return streamId;
     }

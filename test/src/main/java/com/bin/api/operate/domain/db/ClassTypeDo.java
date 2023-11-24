@@ -4,7 +4,7 @@ import com.bin.api.controller.param.ClassTypeParam;
 import com.bin.api.dao.mybatis.model.ClassType;
 import com.bin.api.dao.repository.ClassTypeRepository;
 import com.bin.api.web.base.OperateDef;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.statemachine.IState;
@@ -14,7 +14,7 @@ import com.bin.webase.core.entity.statemachine.NormalStateMachine;
 import java.util.Date;
 
 public class ClassTypeDo extends DbDomain<ClassType> implements IState {
-    public static ClassTypeRepository REPOSITORY = WeContext.getRepository(ClassTypeRepository.class);
+    public static ClassTypeRepository REPOSITORY = WebaseContext.getRepository(ClassTypeRepository.class);
     public static final IStateMachine STATE_MACHINE = new NormalStateMachine(OperateDef.ADD_CLASS_TYPE, OperateDef.UPDATE_CLASS_TYPE,
             OperateDef.DELETE_CLASS_TYPE, OperateDef.DISABLE_CLASS_TYPE);
 

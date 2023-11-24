@@ -4,7 +4,7 @@ import com.bin.api.controller.param.CourseParam;
 import com.bin.api.dao.mybatis.model.Course;
 import com.bin.api.dao.repository.CourseRepository;
 import com.bin.api.web.base.OperateDef;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.statemachine.IState;
@@ -14,7 +14,7 @@ import com.bin.webase.core.entity.statemachine.NormalStateMachine;
 import java.util.Date;
 
 public class CourseDo extends DbDomain<Course> implements IState {
-    public static final CourseRepository REPOSITORY = WeContext.getRepository(CourseRepository.class);
+    public static final CourseRepository REPOSITORY = WebaseContext.getRepository(CourseRepository.class);
     public static final IStateMachine STATE_MACHINE = new NormalStateMachine(OperateDef.ADD_COURSE, OperateDef.UPDATE_COURSE,
             OperateDef.DELETE_COURSE, OperateDef.DISABLE_COURSE);
 

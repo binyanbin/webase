@@ -5,7 +5,7 @@ import com.bin.api.utils.Constants;
 import com.bin.api.utils.RequestUtils;
 import com.bin.api.utils.Sha256;
 import com.bin.api.web.BinHttpServletRequestWrapper;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.web.ApiToken;
 import com.bin.webase.core.web.IDisposeRequest;
 import com.bin.webase.core.web.WebContext;
@@ -57,7 +57,7 @@ public class DisposeRequest implements IDisposeRequest {
         if (validSession) {
             String sessionId = RequestUtils.getSessionId(request);
             ErrorCheck.check(StringUtils.hasText(sessionId), ErrorCode.InvalidAccessToken);
-            String json = WeContext.getCacheBean().get(sessionId);
+            String json = WebaseContext.getCacheBean().get(sessionId);
             ErrorCheck.check(StringUtils.hasText(json), ErrorCode.InvalidAccessToken);
             WebSessionDo webSession = WebSessionDo.parse(json);
             ErrorCheck.check(sessionType.equals(webSession.getClientType().toString()), ErrorCode.InvalidAccessToken, "授权类型不正确");
@@ -72,13 +72,13 @@ public class DisposeRequest implements IDisposeRequest {
         if (webContext.hasToken()) {
             String sessionKey = webContext.getToken().getUniqueId();
             String userLimitKey = USER_LIMIT_KEY + sessionKey;
-            if (WeContext.getCacheBean().hasKey(userLimitKey)) {
+            if (WebaseContext.getCacheBean().hasKey(userLimitKey)) {
                 throw new ApplicationException(ErrorCode.UserLimit);
             } else {
                 String countKey = USER_COUNT_KEY + sessionKey;
-                Long count = WeContext.getCacheBean().increment(countKey, Constants.DATA_TIME_SPAN);
+                Long count = WebaseContext.getCacheBean().increment(countKey, Constants.DATA_TIME_SPAN);
                 if (count > 200) {
-                    WeContext.getCacheBean().set(userLimitKey, count.toString(), Constants.LIMIT_TIME_SPAN);
+                    WebaseContext.getCacheBean().set(userLimitKey, count.toString(), Constants.LIMIT_TIME_SPAN);
                 }
             }
         }
@@ -90,8 +90,8 @@ public class DisposeRequest implements IDisposeRequest {
             if (StringUtils.hasText(webContext.getBusinessType())) {
                 ApiToken token = webContext.getToken();
                 String cacheKey = OPERATOR_LIMIT_KEY + token.getUniqueId() + "_" + webContext.getBusinessType();
-                ErrorCheck.check(!WeContext.getCacheBean().hasKey(cacheKey), ErrorCode.QuickOperate);
-                WeContext.getCacheBean().set(cacheKey, "", OPERATOR_LIMIT_TIME);
+                ErrorCheck.check(!WebaseContext.getCacheBean().hasKey(cacheKey), ErrorCode.QuickOperate);
+                WebaseContext.getCacheBean().set(cacheKey, "", OPERATOR_LIMIT_TIME);
             }
         }
     }
@@ -145,8 +145,8 @@ public class DisposeRequest implements IDisposeRequest {
         ErrorCheck.check(StringUtils.hasText(sign), ErrorCode.InvalidSign, "签名不存在");
 
         ErrorCheck.check(sign.equals(encryptSign), ErrorCode.InvalidSign, "签名不正确");
-        ErrorCheck.check(!WeContext.getCacheBean().hasKey(encryptSign), ErrorCode.InvalidSign, "签名已使用");
-        WeContext.getCacheBean().set(encryptSign, timestamp, 15 * 60);
+        ErrorCheck.check(!WebaseContext.getCacheBean().hasKey(encryptSign), ErrorCode.InvalidSign, "签名已使用");
+        WebaseContext.getCacheBean().set(encryptSign, timestamp, 15 * 60);
     }
 
     public void validBodySign(WebContext webContext, HttpServletRequest request) {

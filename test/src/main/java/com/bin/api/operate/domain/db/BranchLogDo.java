@@ -6,7 +6,7 @@ import com.bin.api.operate.domain.cache.WebSession;
 import com.bin.api.dao.mybatis.model.BranchLog;
 import com.bin.api.dao.repository.BranchLogRepository;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.model.IParam;
@@ -16,7 +16,7 @@ import com.bin.webase.core.web.ThreadWebContextHolder;
 import com.bin.webase.core.web.WebContext;
 
 public class BranchLogDo extends DbDomain<BranchLog> {
-    public static BranchLogRepository REPOSITORY = WeContext.getRepository(BranchLogRepository.class);
+    public static BranchLogRepository REPOSITORY = WebaseContext.getRepository(BranchLogRepository.class);
 
 
     public BranchLogDo(Long id) {

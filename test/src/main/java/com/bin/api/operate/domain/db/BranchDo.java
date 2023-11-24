@@ -6,7 +6,7 @@ import com.bin.api.dao.enums.Status;
 import com.bin.api.dao.mybatis.model.Branch;
 import com.bin.api.dao.repository.BranchRepository;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class BranchDo extends DbDomain<Branch> {
 
-    public static final BranchRepository REPOSITORY = WeContext.getRepository(BranchRepository.class);
+    public static final BranchRepository REPOSITORY = WebaseContext.getRepository(BranchRepository.class);
 
     public BranchDo(Long branchId) {
         super(branchId);

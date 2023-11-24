@@ -1,18 +1,14 @@
-import com.bin.api.Application;
 import com.bin.api.controller.param.*;
 import com.bin.api.controller.query.settings.CampusListQuery;
 import com.bin.api.operate.base.LoginOp;
 import com.bin.api.operate.domain.cache.WebSessionDo;
 import com.bin.api.operate.setting.*;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.operate.Result;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 public class BiSettingTest extends BaseTest {
@@ -23,7 +19,7 @@ public class BiSettingTest extends BaseTest {
         createWebContext(null);
         UserLoginParam param = new UserLoginParam();
         param.setOpenId(openId);
-        Result result = WeContext.getBean(LoginOp.class).execute(param);
+        Result result = WebaseContext.getBean(LoginOp.class).execute(param);
         Assert.assertTrue(result.isSuccess());
 
         createWebContext(result.getData(WebSessionDo.class));
@@ -43,18 +39,18 @@ public class BiSettingTest extends BaseTest {
         courseParam.setPeriod("教学课时: 60课时，线下课时教学+线上打卡作业辅导");
         courseParam.setNeedToKnow("教授对象:技术技巧处于古典舞训练的高级阶段，培训对象应具备期、二期舞蹈能力水平，为力求在古典舞技术技巧方面能有新的突破和提高的舞蹈爱好者、舞蹈行业者，一二期段舞蹈学员渐进班。");
         courseParam.setClassTypeId(10001L);
-        Result result = WeContext.getBean(AddCourseOp.class).execute(courseParam);
+        Result result = WebaseContext.getBean(AddCourseOp.class).execute(courseParam);
         Assert.assertTrue(result.isSuccess());
 
         Long courseId = result.getData(Long.class);
         courseParam.setId(courseId);
         courseParam.setName("中国舞教练专业系统班1");
-        Assert.assertTrue(WeContext.getBean(UpdateCourseOp.class).execute(courseParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(UpdateCourseOp.class).execute(courseParam).isSuccess());
 
         IdListParam idListParam = new IdListParam(Lists.newArrayList(courseId));
-        Assert.assertTrue(WeContext.getBean(DisableCourseOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(DisableCourseOp.class).execute(idListParam).isSuccess());
 
-        Assert.assertTrue(WeContext.getBean(DeleteCourseOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(DeleteCourseOp.class).execute(idListParam).isSuccess());
     }
 
     @Test
@@ -63,20 +59,20 @@ public class BiSettingTest extends BaseTest {
         courseParam.setName("开福校区");
         courseParam.setAddress("开福区政府旁边");
 
-        Result result = WeContext.getBean(AddCampusOp.class).execute(courseParam);
+        Result result = WebaseContext.getBean(AddCampusOp.class).execute(courseParam);
         Assert.assertTrue(result.isSuccess());
 
         Long courseId = result.getData(Long.class);
 
         courseParam.setName("河西校区");
         courseParam.setId(courseId);
-        Assert.assertTrue(WeContext.getBean(UpdateCampusOp.class).execute(courseParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(UpdateCampusOp.class).execute(courseParam).isSuccess());
 
         IdListParam idListParam = new IdListParam(Lists.newArrayList(courseId));
-        Assert.assertTrue(WeContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
 
-        Assert.assertTrue(WeContext.getBean(DeleteCampusOp.class).execute(idListParam).isSuccess());
-        Assert.assertTrue(WeContext.getBean(CampusListQuery.class).execute().size() == 0);
+        Assert.assertTrue(WebaseContext.getBean(DeleteCampusOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(CampusListQuery.class).execute().size() == 0);
     }
 
     @Test
@@ -85,18 +81,18 @@ public class BiSettingTest extends BaseTest {
         classTypeParam.setName("教练班");
         classTypeParam.setDescription("教练专用");
 
-        Result result = WeContext.getBean(AddClassTypeOp.class).execute(classTypeParam);
+        Result result = WebaseContext.getBean(AddClassTypeOp.class).execute(classTypeParam);
         Assert.assertTrue(result.isSuccess());
 
         Long courseId = result.getData(Long.class);
 
         classTypeParam.setId(courseId);
         classTypeParam.setName("河西校区");
-        Assert.assertTrue(WeContext.getBean(UpdateClassTypeOp.class).execute(classTypeParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(UpdateClassTypeOp.class).execute(classTypeParam).isSuccess());
 
         IdListParam idListParam = new IdListParam(Lists.newArrayList(courseId));
-        Assert.assertTrue(WeContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(DisableCampusOp.class).execute(idListParam).isSuccess());
 
-        Assert.assertTrue(WeContext.getBean(DeleteClassTypeOp.class).execute(idListParam).isSuccess());
+        Assert.assertTrue(WebaseContext.getBean(DeleteClassTypeOp.class).execute(idListParam).isSuccess());
     }
 }

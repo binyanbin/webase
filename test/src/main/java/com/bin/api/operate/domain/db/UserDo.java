@@ -8,7 +8,7 @@ import com.bin.api.dao.mybatis.model.User;
 import com.bin.api.dao.repository.UserRepository;
 import com.bin.api.utils.Sha256;
 import com.bin.webase.core.context.IRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
 import com.google.common.collect.Lists;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UserDo extends DbDomain<User> implements IBranch {
-    public static UserRepository REPOSITORY = WeContext.getRepository(UserRepository.class);
+    public static UserRepository REPOSITORY = WebaseContext.getRepository(UserRepository.class);
 
     public UserDo(Long id) {
         super(id);

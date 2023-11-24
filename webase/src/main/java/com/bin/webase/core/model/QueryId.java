@@ -1,6 +1,6 @@
 package com.bin.webase.core.model;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class QueryId {
         if (!mapQuery.containsKey(id)) {
             mapQuery.put(id, result);
         } else {
-            WeContext.error("query[" + id + "]已定义");
+            WebaseContext.error("query[" + id + "]已定义");
         }
         return result;
     }

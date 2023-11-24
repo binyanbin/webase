@@ -4,7 +4,7 @@ package com.bin.api.operate.domain.db;
 import com.bin.api.dao.enums.Status;
 import com.bin.api.dao.mybatis.model.Employee;
 import com.bin.api.dao.repository.EmployeeRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class EmployeeDo extends DbDomain<Employee> implements IBranch {
 
-    public static EmployeeRepository REPOSITORY = WeContext.getRepository(EmployeeRepository.class);
+    public static EmployeeRepository REPOSITORY = WebaseContext.getRepository(EmployeeRepository.class);
 
     public EmployeeDo(Long employeeId) {
         super(employeeId);

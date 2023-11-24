@@ -1,7 +1,7 @@
 package com.bin.api.operate.domain.cache;
 
 import com.alibaba.fastjson.JSON;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.entity.CacheDomain;
 import org.springframework.util.StringUtils;
 
@@ -14,7 +14,7 @@ public class ActiveBranchDo extends CacheDomain<ActiveBranch> {
     }
 
     public ActiveBranchDo(Long branchId) {
-        String json = WeContext.getCacheBean().get(ActiveBranch.PREFIX + branchId);
+        String json = WebaseContext.getCacheBean().get(ActiveBranch.PREFIX + branchId);
         if (StringUtils.hasText(json)) {
             model = JSON.parseObject(json, ActiveBranch.class);
         }

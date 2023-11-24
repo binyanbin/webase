@@ -4,7 +4,7 @@ package com.bin.webase.core.entity;
 import com.alibaba.fastjson.JSON;
 import com.bin.webase.core.context.CacheDbRepository;
 import com.bin.webase.core.context.IRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.operate.UnitWorkUtils;
 
 import java.lang.reflect.*;
@@ -27,7 +27,7 @@ public abstract class DbDomain<T> implements UniqueId {
         if (model == null) {
             IRepository<T> repository = getRepository();
             if (repository instanceof CacheDbRepository) {
-                String json = WeContext.getCacheBean().get(CacheDbRepository.PREFIX + uniqueId);
+                String json = WebaseContext.getCacheBean().get(CacheDbRepository.PREFIX + uniqueId);
                 if (json != null && json.length() > 0) {
                     model = JSON.parseObject(json, type);
                 } else {

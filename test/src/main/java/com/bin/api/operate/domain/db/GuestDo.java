@@ -2,7 +2,7 @@ package com.bin.api.operate.domain.db;
 
 import com.bin.api.dao.mybatis.model.Guest;
 import com.bin.api.dao.repository.GuestRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 
 public class GuestDo extends DbDomain<Guest> implements IBranch {
 
-    public static GuestRepository REPOSITORY = WeContext.getRepository(GuestRepository.class);
+    public static GuestRepository REPOSITORY = WebaseContext.getRepository(GuestRepository.class);
 
     public GuestDo(Long id) {
         super(id);

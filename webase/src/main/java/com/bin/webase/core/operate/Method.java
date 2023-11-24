@@ -1,7 +1,7 @@
 package com.bin.webase.core.operate;
 
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IOperateLog;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.statemachine.BizStateMachine;
@@ -26,23 +26,23 @@ public abstract class Method extends BaseOperate {
     }
 
     protected void saveBranchLog(String msg, IParam param, DbDomain domain) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, param, msg);
+            WebaseContext.getOperateLog().log(operateId, domain, param, msg);
         }
     }
 
     protected void saveBranchLog(DbDomain domain, IParam param) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, param, "");
+            WebaseContext.getOperateLog().log(operateId, domain, param, "");
         }
     }
 
     protected void saveBranchLog(DbDomain domain) {
-        IOperateLog branchLog = WeContext.getOperateLog();
+        IOperateLog branchLog = WebaseContext.getOperateLog();
         if (branchLog != null) {
-            WeContext.getOperateLog().log(operateId, domain, null, "");
+            WebaseContext.getOperateLog().log(operateId, domain, null, "");
         }
     }
 

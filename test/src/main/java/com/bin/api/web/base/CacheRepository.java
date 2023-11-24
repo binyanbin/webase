@@ -9,10 +9,10 @@ import org.springframework.util.StringUtils;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class CacheRepositoryRepository implements ICacheRepository {
+public class CacheRepository implements ICacheRepository {
     private final StringRedisTemplate redisTemplate;
 
-    public CacheRepositoryRepository(StringRedisTemplate redisTemplate) {
+    public CacheRepository(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 

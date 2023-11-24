@@ -1,6 +1,6 @@
 package com.bin.webase.core.model;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.web.ApiToken;
 
 import java.util.*;
@@ -14,7 +14,7 @@ public class FunctionId {
         if (!mapFunctionId.containsKey(id)) {
             mapFunctionId.put(id, result);
         } else {
-            WeContext.error("Function[" + id + "]已定义");
+            WebaseContext.error("Function[" + id + "]已定义");
         }
         return result;
     }

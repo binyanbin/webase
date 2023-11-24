@@ -1,7 +1,7 @@
 package com.bin.webase.core.query;
 
 import com.bin.webase.core.context.IQueryLog;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.model.FunctionObject;
 import com.bin.webase.core.model.IParam;
 import com.bin.webase.core.model.NoParam;
@@ -13,7 +13,7 @@ public abstract class Query<T, P extends IParam> extends FunctionObject {
     public T execute(P p) {
         validateFunction();
         p.validate();
-        IQueryLog queryLog = WeContext.getQueryLog();
+        IQueryLog queryLog = WebaseContext.getQueryLog();
         if (queryLog != null) {
             if (getQueryId() != null) {
                 queryLog.log(getQueryId(), p);

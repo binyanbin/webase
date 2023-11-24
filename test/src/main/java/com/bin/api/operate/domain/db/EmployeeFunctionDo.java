@@ -3,14 +3,14 @@ package com.bin.api.operate.domain.db;
 
 import com.bin.api.dao.mybatis.model.EmployeeFunction;
 import com.bin.api.dao.repository.EmployeeFunctionRepository;
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IRepository;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.entity.IBranch;
 
 public class EmployeeFunctionDo extends DbDomain<EmployeeFunction> implements IBranch {
 
-    public static EmployeeFunctionRepository REPOSITORY = WeContext.getRepository(EmployeeFunctionRepository.class);
+    public static EmployeeFunctionRepository REPOSITORY = WebaseContext.getRepository(EmployeeFunctionRepository.class);
 
     public EmployeeFunctionDo(EmployeeFunction employeeFunction) {
         super(employeeFunction);

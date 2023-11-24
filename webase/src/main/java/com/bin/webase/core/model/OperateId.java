@@ -1,6 +1,6 @@
 package com.bin.webase.core.model;
 
-import com.bin.webase.core.context.WeContext;
+import com.bin.webase.core.context.WebaseContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class OperateId {
         if (!mapCommand.containsKey(id)) {
             mapCommand.put(id, result);
         } else {
-            WeContext.error("command[" + id + "]已定义");
+            WebaseContext.error("command[" + id + "]已定义");
         }
         return result;
     }
