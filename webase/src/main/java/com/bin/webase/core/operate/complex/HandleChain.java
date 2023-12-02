@@ -2,27 +2,28 @@ package com.bin.webase.core.operate.complex;
 
 import com.bin.webase.core.operate.Handle;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class HandleChain {
-    private List<Handle> handles;
+    private Handle firstHandle;
+    private Handle endHandle;
 
     public HandleChain() {
-        this.handles = new ArrayList<>();
         init();
     }
 
     public void doHandle(HandleContext context) {
-        if (handles.size() > 0) {
-            for (Handle handle : handles) {
-                handle.handle(context);
-            }
+        if (firstHandle != null) {
+            firstHandle.doHandle(context);
         }
     }
 
     protected void addHandle(Handle handle) {
-        handles.add(handle);
+        if (firstHandle == null) {
+            firstHandle = handle;
+            endHandle = handle;
+        } else {
+            endHandle.setNextHandler(handle);
+            endHandle = handle;
+        }
     }
 
     protected abstract void init();
