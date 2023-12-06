@@ -16,7 +16,7 @@ public class WebContext {
     private final Map<String, String> parameters;
     private String versionId;
     private ApiMethodAttribute methodAttribute;
-    private Long streamId;
+    private Long traceId;
     private Date beginTime;
     private String businessType;
 
@@ -73,15 +73,15 @@ public class WebContext {
         this.versionId = versionId;
     }
 
-    public Long getStreamId() {
-        if (streamId == null) {
-            streamId = WebaseContext.getSequenceBean().newKey(this.getClass());
+    public Long getTraceId() {
+        if (traceId == null) {
+            traceId = WebaseContext.getSequenceBean().newKey(this.getClass());
         }
-        return streamId;
+        return traceId;
     }
 
     public boolean isExistsId() {
-        return streamId != null;
+        return traceId != null;
     }
 
     public Date getBeginTime() {
