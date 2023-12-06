@@ -11,7 +11,7 @@ import java.util.Map;
 public class Context {
     private final List<DbAction> dbActions;
     private final Map<String, DbAction> idMap;
-    private final List<Runner> finishes;
+    private final List<Runnable> finishes;
 
     public Context() {
         dbActions = new ArrayList<>();
@@ -49,14 +49,14 @@ public class Context {
     }
 
 
-    public void addAfter(Runner runner) {
+    public void addAfter(Runnable runner) {
         if (runner == null) {
             return;
         }
         finishes.add(runner);
     }
 
-    public List<Runner> getAfterRun() {
+    public List<Runnable> getAfterRun() {
         return finishes;
     }
 

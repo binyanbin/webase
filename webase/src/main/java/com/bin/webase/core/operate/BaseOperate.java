@@ -1,7 +1,7 @@
 package com.bin.webase.core.operate;
 
-import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.context.IOperateLog;
+import com.bin.webase.core.context.WebaseContext;
 import com.bin.webase.core.entity.CacheDomain;
 import com.bin.webase.core.entity.DbDomain;
 import com.bin.webase.core.model.FunctionObject;
@@ -33,7 +33,7 @@ class BaseOperate extends FunctionObject {
         UnitWorkUtils.any(runner);
     }
 
-    public void afterCommit(Runner runner) {
+    public void afterCommit(Runnable runner) {
         UnitWorkUtils.after(runner);
     }
 

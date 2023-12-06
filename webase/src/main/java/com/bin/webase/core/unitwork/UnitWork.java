@@ -12,6 +12,8 @@ import com.bin.webase.exception.ErrorCheck;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 工作单元
@@ -96,7 +98,7 @@ public class UnitWork {
         getContext().saveRunner(runner);
     }
 
-    public void saveAfterRun(Runner runner) {
+    public void saveAfterRun(Runnable runner) {
         getContext().addAfter(runner);
     }
 
@@ -137,10 +139,8 @@ public class UnitWork {
         for (Runner runner : runners) {
             runner.run();
         }
-        List<Runner> runnerList = getContext().getAfterRun();
-        for (Runner runner : runnerList) {
-            runner.run();
-        }
+        List<Runnable> runnerList = getContext().getAfterRun();
+        asyncExecute(runnerList);
         context.remove();
     }
 
@@ -177,5 +177,15 @@ public class UnitWork {
         return mapId.get(domain.getUniqueId());
     }
 
+
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static void asyncExecute(List<Runnable> runners) {
+        if (runners != null || runners.size() > 0) {
+            for (int i = 0; i < runners.size(); i++) {
+                Runnable finish = runners.get(i);
+                executorService.execute(finish);
+            }
+        }
+    }
 
 }

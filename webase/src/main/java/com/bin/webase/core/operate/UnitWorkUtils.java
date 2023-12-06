@@ -72,7 +72,7 @@ public class UnitWorkUtils {
         WebaseContext.getUnitWork().any(runner);
     }
 
-    static void after(Runner runner) {
+    static void after(Runnable runner) {
         WebaseContext.getUnitWork().saveAfterRun(runner);
     }
 
